@@ -1,0 +1,124 @@
+body{
+    background-color: rgba(241, 231, 225, 1);
+    overflow-x: hidden;
+    font-family: "Bree Serif";
+    font-size: 20px;
+    margin: 0;
+}
+
+nav{
+    background: #f2785c;
+    font-family: "Bree Serif";
+    font-size: 20px;
+}
+
+
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    width: 100%;
+    bottom: 0;
+}
+
+.footer-container {
+    margin: 0 auto; 
+}
+
+.contact-info {
+    text-align: center;
+}
+
+.contact-info h3 {
+    margin-bottom: 10px;
+}
+
+.contact-info p {
+    margin: 5px 0;
+}
+
+.labels {
+    font-size: 11px
+}
+
+.add-experience:hover {
+    background: #BA68C8;
+    color: #fff;
+    cursor: pointer;
+    border: solid 1px #BA68C8
+}
+
+@media only screen and (max-width: 760px) { 
+    .menu-container {
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    .menu-logo {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .menu-logo img {
+        max-height: 50px;
+        max-width: 50px;
+    }
+
+    .menu {
+        position: absolute;
+        box-sizing: border-box;
+        width: 300px;
+        right: -300px;
+        top: 0;
+        margin: -20px;
+        padding: 75px 50px 50px;
+        background: #000000;
+        -webkit-font-smoothing: antialiased;
+        transform-origin: 0% 0%;
+        transform: translateX(0%);
+        transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+    }
+
+    .menu-container input:checked ~ .menu {
+        transform: translateX(-100%);
+    }
+}
+
+@media only screen and (min-width: 761px) { 
+    .menu-container {
+        width: 100%;
+    }
+
+    .menu-container a {
+        color: #000000;
+    }
+
+    .menu-container input {
+        display: none;
+    }
+
+    .menu-container span {
+        display: none;
+    }
+
+    .menu {
+        position: relative;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .menu ul {
+        display: flex;
+        padding: 0;
+    }
+
+    .menu li {
+        padding: 0 20px;
+    }
+}
+
+
+
