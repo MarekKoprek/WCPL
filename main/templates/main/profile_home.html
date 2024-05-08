@@ -1,0 +1,38 @@
+{% extends "main/profile_base.html" %}
+{% block content %}
+<div class="container">
+    <div class="main">
+        <div class="container rounded bg-white mt-5 mb-5">
+            <div class="row">
+                <div class="col-md-3 border-right">
+                    <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                        <img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+                        <span class="font-weight-bold">Roman</span>
+                        <span class="text-black-50">245125@edu.p.lodz.pl</span>
+                    </div>
+                </div>
+                <div class="col-md-6 border-right">
+                    <div class="p-2 py-5">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="text-right">Profile Settings</h4>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-6"><label class="labels">Imię</label><input type="text" class="form-control" placeholder="Imię" value="Roman"></div>
+                            <div class="col-md-6"><label class="labels">Nazwisko</label><input type="text" class="form-control" value="Beznosenko" placeholder="Nazwisko"></div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-12"><label class="labels">E-mail</label><input type="text" class="form-control" placeholder="E-mail" value="245125@edu.p.lodz.pl"></div>
+                            <div class="col-md-12"><label class="labels">Numer telefonu</label><input type="text" class="form-control" placeholder="Numer telefonu" value="+48 570 099 806"></div>
+                            <div class="col-md-12"><label class="labels">Wydział</label><input type="text" class="form-control" placeholder="Wydział" value="WEEiA"></div>
+                            <div class="col-md-12"><label class="labels">Kierunek</label><input type="text" class="form-control" placeholder="Kierunek" value="Informatyka"></div>
+                            <div class="col-md-12"><label class="labels">Semestr studiów</label><input type="text" class="form-control" placeholder="Semestr studiów" value="4"></div>
+                            <div class="col-md-12"><label class="labels">O mnie</label><textarea type="text" class="form-control" placeholder="O mnie"></textarea></div>
+                        </div>
+                        <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button">Save Profile</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
