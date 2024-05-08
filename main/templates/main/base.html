@@ -20,13 +20,14 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item mr-4">
-                        <a class="nav-link" href="#">Kalendarz</a>
+                        <a class="nav-link {% block calendar_activate %}{% endblock %}" href="/calendar">Kalendarz</a>
                     </li>
                     <li class="nav-item mr-4">
-                        <a class="nav-link" href="#">Wydarzenia</a>
+                        <a class="nav-link {% block events_activate %}{% endblock %}" href="/events">Wydarzenia</a>
+                        <span class="sr-only">(current)</span>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Profil</a>
+                        <a class="nav-link {% block profile_activate %}{% endblock %}" href="/profile">Profil</a>
                         <span class="sr-only">(current)</span>
                     </li>
                 </ul>
