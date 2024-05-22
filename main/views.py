@@ -4,11 +4,13 @@ from .models import Profile, Event
 
 
 def profileHome(request, username):
-    user = get_object_or_404(User, username=username)
-    profile = get_object_or_404(Profile, user=user)
+    userInfo = get_object_or_404(User, username=username)
+    profile = get_object_or_404(Profile, user=userInfo)
+    userCurrent = request.user
     context = {
-        'user' : user,
-        'profile' : profile
+        'userInfo' : userInfo,
+        'profile' : profile,
+        'userCurrent' : userCurrent
     }
 
     return render(request, 'main/profile_home.html', context)
