@@ -14,13 +14,13 @@ class ProfileAdmin(admin.ModelAdmin):
 class EventsAdmin(admin.ModelAdmin):
     list_display = (
         'author',
-        #'users',
         'addDate',
         'startDate',
         'endDate',
         'title',
         'description'
     )
+    filter_horizontal = ('users',)
 
 admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Event, EventsAdmin)
