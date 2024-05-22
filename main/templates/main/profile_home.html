@@ -25,21 +25,24 @@ active
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h4 class="text-right">Profile Settings</h4>
                         </div>
-                        <div class="row mt-2">
-                            <div class="col-md-6"><label class="labels">Imię</label><input type="text" class="form-control" placeholder="Imię" value="{{ userInfo.first_name }}" {% if userCurrent.username != userInfo.username %} disabled {% endif %}></div>
-                            <div class="col-md-6"><label class="labels">Nazwisko</label><input type="text" class="form-control" value="{{ userInfo.last_name }}" placeholder="Nazwisko"  {% if userCurrent.username != userInfo.username %} disabled {% endif %}></div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-12"><label class="labels">E-mail</label><input type="text" class="form-control" placeholder="E-mail" value="{{ userInfo.email }}"  {% if userCurrent.username != userInfo.username %} disabled {% endif %}></div>
-                            <div class="col-md-12"><label class="labels">Numer telefonu</label><input type="text" class="form-control" placeholder="Numer telefonu" value="{{ profile.phone_number }}"  {% if userCurrent.username != userInfo.username %} disabled {% endif %}></div>
-                            <div class="col-md-12"><label class="labels">Wydział</label><input type="text" class="form-control" placeholder="Wydział" value="{{ profile.faculty }}"  {% if userCurrent.username != userInfo.username %} disabled {% endif %}></div>
-                            <div class="col-md-12"><label class="labels">Kierunek</label><input type="text" class="form-control" placeholder="Kierunek" value="{{ profile.course }}"  {% if userCurrent.username != userInfo.username %} disabled {% endif %}></div>
-                            <div class="col-md-12"><label class="labels">Semestr studiów</label><input type="text" class="form-control" placeholder="Semestr studiów" value="{{ profile.semester }}"  {% if userCurrent.username != userInfo.username %} disabled {% endif %}></div>
-                            <div class="col-md-12"><label class="labels">O mnie</label><textarea type="text" class="form-control" placeholder="{{ profile.bio }}"  {% if userCurrent.username != userInfo.username %} disabled {% endif %}></textarea></div>
-                        </div>
-                        {% if userCurrent.username == userInfo.username %}
-                        <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button">Save Profile</button></div>
-                        {% endif %}
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="row mt-2">
+                                <div class="col-md-6"><label class="labels">Imię</label><input type="text" class="form-control" name="first_name" placeholder="Imię" value="{{ userInfo.first_name }}" {% if userCurrent.username != userInfo.username %} disabled {% endif %}></div>
+                                <div class="col-md-6"><label class="labels">Nazwisko</label><input type="text" class="form-control" name="last_name" value="{{ userInfo.last_name }}" placeholder="Nazwisko"  {% if userCurrent.username != userInfo.username %} disabled {% endif %}></div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-12"><label class="labels">E-mail</label><input type="text" class="form-control" name="email" placeholder="E-mail" value="{{ userInfo.email }}"  {% if userCurrent.username != userInfo.username %} disabled {% endif %}></div>
+                                <div class="col-md-12"><label class="labels">Numer telefonu</label><input type="text" class="form-control" name="phone_number" placeholder="Numer telefonu" value="{{ profile.phone_number }}"  {% if userCurrent.username != userInfo.username %} disabled {% endif %}></div>
+                                <div class="col-md-12"><label class="labels">Wydział</label><input type="text" class="form-control" name="faculty" placeholder="Wydział" value="{{ profile.faculty }}"  {% if userCurrent.username != userInfo.username %} disabled {% endif %}></div>
+                                <div class="col-md-12"><label class="labels">Kierunek</label><input type="text" class="form-control" name="course" placeholder="Kierunek" value="{{ profile.course }}"  {% if userCurrent.username != userInfo.username %} disabled {% endif %}></div>
+                                <div class="col-md-12"><label class="labels">Semestr studiów</label><input type="text" class="form-control" name="semester" placeholder="Semestr studiów" value="{{ profile.semester }}"  {% if userCurrent.username != userInfo.username %} disabled {% endif %}></div>
+                                <div class="col-md-12"><label class="labels">O mnie</label><textarea type="text" class="form-control" name="bio" placeholder="bio"  {% if userCurrent.username != userInfo.username %} disabled {% endif %}>{{ profile.bio }}</textarea></div>
+                            </div>
+                            {% if userCurrent.username == userInfo.username %}
+                            <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
+                            {% endif %}
+                        </form>
                     </div>
                 </div>
             </div>
