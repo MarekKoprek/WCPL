@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile, Event
 
 
 def profileHome(request, username):
@@ -13,7 +13,7 @@ def profileHome(request, username):
 
     return render(request, 'main/profile_home.html', context)
 
-events = [
+events_ = [
     {
         'title': 'Tytuł ogłoszenia',
         'description': 'Ogólny opis wydarzenia cokolwiek tutaj może być.',
@@ -55,7 +55,7 @@ participantRows = [1, 2, 3, 4]
 
 def eventsSearch(request):
     context = {
-        'events': events,
+        'events': Event.objects.all(),
         'participantRows': participantRows
         }
     return render(request, "main/events_search.html", context)
