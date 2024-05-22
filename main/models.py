@@ -11,3 +11,15 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+class Event(models.Model):
+    author = models.OneToOneField(User, on_delete=models.CASCADE)
+    #users = models.ForeignKey(User, on_delete=models.CASCADE)
+    addDate = models.DateField()
+    startDate = models.DateField()
+    endDate = models.DateField()
+    title = models.CharField(max_length=20)
+    description = models.CharField(max_length=300)
+
+    def __str__(self):
+        return self.title
