@@ -41,6 +41,9 @@
                 </li>
 
                 <li class="nav-item">
+                    <a class="nav-link {% block login %}{% endblock %}" href="{% url 'login' %}">Zaloguj się</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link {% block register %}{% endblock %}" href="{% url 'register' %}">Zarejestruj się</a>
                 </li>
             </div>
