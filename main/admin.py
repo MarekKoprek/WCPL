@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Profile
+from .models import Profile, Event
 
 class ProfileAdmin(admin.ModelAdmin):
     list_display = (
@@ -11,4 +11,16 @@ class ProfileAdmin(admin.ModelAdmin):
         'bio'
     )
 
+class EventsAdmin(admin.ModelAdmin):
+    list_display = (
+        'author',
+        'addDate',
+        'startDate',
+        'endDate',
+        'title',
+        'description'
+    )
+    filter_horizontal = ('users',)
+
 admin.site.register(Profile, ProfileAdmin)
+admin.site.register(Event, EventsAdmin)

@@ -1,19 +1,38 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile, Event
 
 
 def profileHome(request, username):
-    user = get_object_or_404(User, username=username)
-    profile = get_object_or_404(Profile, user=user)
+    userInfo = get_object_or_404(User, username=username)
+    profile = get_object_or_404(Profile, user=userInfo)
+    userCurrent = request.user
+
+    if request.method == 'POST':
+        userInfo.first_name = request.POST.get('first_name', '')
+        userInfo.last_name = request.POST.get('last_name', '')
+        userInfo.email = request.POST.get('email', '')
+
+        profile.phone_number = request.POST.get('phone_number', '')
+        profile.faculty = request.POST.get('faculty', '')
+        profile.course = request.POST.get('course', '')
+        profile.semester = request.POST.get('semester', '')
+        profile.bio = request.POST.get('bio', '')
+
+        userInfo.save()
+        profile.save()
+
+        return redirect('profile-home', username=username)
+
     context = {
-        'user' : user,
-        'profile' : profile
+        'userInfo' : userInfo,
+        'profile' : profile,
+        'userCurrent' : userCurrent
     }
 
     return render(request, 'main/profile_home.html', context)
 
-events = [
+events_ = [
     {
         'title': 'Tytuł ogłoszenia',
         'description': 'Ogólny opis wydarzenia cokolwiek tutaj może być.',
@@ -55,7 +74,7 @@ participantRows = [1, 2, 3, 4]
 
 def eventsSearch(request):
     context = {
-        'events': events,
+        'events': Event.objects.all(),
         'participantRows': participantRows
         }
     return render(request, "main/events_search.html", context)
