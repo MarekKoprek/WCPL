@@ -1,0 +1,21 @@
+{% extends "main/base.html" %}
+
+{% block head %}
+<title>Logout</title>
+{% endblock head %}
+
+
+{% block content %}
+<div>
+    <form method="POST">
+        {% csrf_token %}
+
+    <button type="submit">Logout</button>
+        <div class="border-top pt-3">
+            <small class="text-muted">Zaloguj się ponownie</small>
+            <button class="btn btn-outline-info" type="button">Zaloguj się</button>
+        </div>
+    </form>
+
+</div>
+{% endblock content %}
