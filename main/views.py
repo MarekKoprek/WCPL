@@ -84,3 +84,4 @@ def eventsAdd(request):
 
 def calendar(request):
     return render(request, "main/calendar.html")
+

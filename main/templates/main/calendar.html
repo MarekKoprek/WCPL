@@ -2,6 +2,9 @@
 
 {% block head %}
 <title>Calendar</title>
+<link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
+</head>
 {% endblock head %}
 
 {% block calendar_activate %}
@@ -9,5 +12,26 @@ active
 {% endblock calendar_activate %}
 
 {% block content %}
+<div id="calendar"></div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                events: [
+                    {
+                        title: 'Event 1',
+                        start: '2024-05-01'
+                    },
+                    {
+                        title: 'Event 2',
+                        start: '2024-05-02'
+                    }
+                ]
+            });
+
+            calendar.render();
+        });
+    </script>
 {% endblock content %}
