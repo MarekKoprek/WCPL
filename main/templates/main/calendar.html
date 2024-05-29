@@ -1,10 +1,10 @@
 {% extends "main/base.html" %}
-
+{% load static %}
 {% block head %}
 <title>Calendar</title>
 <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
-</head>
+<link rel="stylesheet" href="{% static 'main/calendar.css' %}">
 {% endblock head %}
 
 {% block calendar_activate %}
@@ -12,26 +12,30 @@ active
 {% endblock calendar_activate %}
 
 {% block content %}
-<div id="calendar"></div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                events: [
-                    {
-                        title: 'Event 1',
-                        start: '2024-05-01'
-                    },
-                    {
-                        title: 'Event 2',
-                        start: '2024-05-02'
-                    }
-                ]
-            });
-
-            calendar.render();
-        });
-    </script>
+<div class="row justify-content-center">
+    <div class="col-md-6 col-sm-12">
+        <div id="calendar">
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var calendarEl = document.getElementById('calendar');
+                    var calendar = new FullCalendar.Calendar(calendarEl, {
+                        initialView: 'dayGridMonth',
+                        events: [
+                            {% for data in events %}
+                            {
+                                title: "{{ data.title }}",
+                                start: "{{ data.startDate|date:'Y-m-d' }}",
+                                end: "{{ data.endDate|date:'Y-m-d' }}",
+                                url: "{% url 'events-search' %}"
+                            }{% if not forloop.last %},{% endif %}
+                            {% endfor %}
+                        ]
+                    });
+            
+                    calendar.render();
+                });
+            </script>
+        </div>
+    </div>
+</div>
 {% endblock content %}

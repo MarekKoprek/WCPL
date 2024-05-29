@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from .models import Profile, Event
+from json import dumps
 
 
 def profileHome(request, username):
@@ -83,5 +84,8 @@ def eventsAdd(request):
     return render(request, "main/events_add.html")
 
 def calendar(request):
-    return render(request, "main/calendar.html")
+    context = {
+        'events' : Event.objects.all()
+    }
+    return render(request, "main/calendar.html", context)
 

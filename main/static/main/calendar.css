@@ -1,0 +1,29 @@
+#calendar{
+    margin: 20px;
+}
+.fc-header-toolbar{
+    padding: 10px;
+    font-family: "Bree Serif";
+    font-size: 20px;
+}
+.fc-daygrid-event{
+    font-family: "Bree Serif";
+    font-size: 16px;
+}
+.fc-daygrid-event:hover{
+    background-color: #0056b3;
+    transition: 0.5s;
+}
+
+@media (max-width: 576px) {
+    .fc-header-toolbar {
+        font-size: 16px;
+        padding: 5px;
+    }
+    .fc-daygrid-event {
+        font-size: 10px;
+    }
+    #calendar {
+        margin: 10px;
+    }
+}
