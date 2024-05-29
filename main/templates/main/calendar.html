@@ -14,24 +14,24 @@ active
 {% block content %}
 <div id="calendar"></div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                events: [
-                    {
-                        title: 'Event 1',
-                        start: '2024-05-01'
-                    },
-                    {
-                        title: 'Event 2',
-                        start: '2024-05-02'
-                    }
-                ]
-            });
-
-            calendar.render();
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            events: [
+                {% for data in events %}
+                {
+                    title: "{{ data.title }}",
+                    start: "{{ data.startDate|date:'Y-m-d' }}",
+                    end: "{{ data.endDate|date:'Y-m-d' }}",
+                    url: "{% url 'events-search' %}"
+                }{% if not forloop.last %},{% endif %}
+                {% endfor %}
+            ]
         });
-    </script>
+
+        calendar.render();
+    });
+</script>
 {% endblock content %}
