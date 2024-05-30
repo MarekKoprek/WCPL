@@ -14,23 +14,25 @@ active
     <div class="row">
         <div class="col-md-6 py-2 ps-5 pe-4 border">
             <div class="container mb-2">
-                {% for event in events %}
-                <div class="row rounded border border-5 mb-2 bg-white">
-                    <div class="col-md-1 p-3">
-                        <div class="d-flex justify-content-center mt-2">
-                            <img class="rounded" src="{% static 'main/event_blank.png' %}" alt="event-icon" style="width: 40px;height: 40px;">
+                <div class="container-fluid" style="height: 530px; max-height: 530px; overflow-y: scroll;">
+                    {% for event in events %}
+                    <div class="row rounded border border-5 mb-2 bg-white">
+                        <div class="col-md-1">
+                            <div class="d-flex justify-content-center" style="height: 100%;width: 100%;">
+                                <img class="rounded" src="{% static 'main/event_blank.png' %}" alt="event-icon" style="width: 100%;height: 100%;">
+                            </div>
+                        </div>
+                        <div class="col-md-9 btn pt-2 text-start">
+                            <h4 class="fw-bold">{{ event.title }}</h4>
+                            <p class="fs-5">{{ event.description }}</p>                   
+                        </div>
+                        <div class="col-md-2 text-end pt-2 text-muted">
+                            {{ event.startDate }}
                         </div>
                     </div>
-                    <div class="col-md-9 btn pt-2 text-start">
-                        <h4 class="fw-bold">{{ event.title }}</h4>
-                        <p class="fs-5">{{ event.description }}</p>                   
-                    </div>
-                    <div class="col-md-2 text-end pt-2 text-muted">
-                        {{ event.startDate }}
-                    </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
-                <div class="row px-5">
+                <div class="row px-5 mt-2">
                     <a class="col-md-12 btn pt-1 rounded-pill text-center" href="{% url 'events-add' %}" style="background-color: #F2785C">
                         <h1 class="fw-bold">Dodaj Ogłoszenie</h1>
                     </a>
@@ -43,24 +45,24 @@ active
                     <div class="col-md-3">
                         <img class="rounded" src="{% static 'main/event_blank.png' %}" alt="event-icon" style="width: 100%;height: 100%;">
                     </div>
-                    <div class="col-md-9 p-5">
+                    <div class="col-md-9 p-3 pt-4">
                         <div class="container p-3 text-center">
                             <h1 class="fw-bold">Tytuł wydarzenia</h1>
                         </div>
                     </div>
                 </div>
-                <div class="row m-4 py-3 rounded bg-white">
+                <div class="row mx-4 my-2 py-3 rounded bg-white">
                     <div class="col-md-12">
-                        <div class="container">
-                            Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. 
+                        <div class="container" style="height: 190px;">
+                            Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. Dowolny opis wydarzenia. 
                         </div>
                     </div>
                 </div>
                 <h3>Wezmą udział</h3>
-                <div class="container p-2">
+                <div class="container">
                     {% for row in participantRows %}
                     <div class="row">
-                        {% for row in participantRows %}
+                        {% for row in participantColumns %}
                         <div class="col-md-3">
                             <p>1</p>
                         </div>
@@ -69,7 +71,7 @@ active
                     {% endfor %}
                 </div>
                 <div class="row px-5">
-                    <a class="col-md-12 btn pt-1 mt-4 rounded-pill text-center" href="{% url 'events-add' %}" style="background-color: #F2785C">
+                    <a class="col-md-12 btn pt-1 rounded-pill text-center" href="{% url 'events-add' %}" style="background-color: #F2785C">
                         <h1 class="fw-bold">Zgłoś udział</h1>
                     </a>
                 </div>

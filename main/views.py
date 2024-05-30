@@ -71,12 +71,14 @@ events_ = [
     }
 ]
 
-participantRows = [1, 2, 3, 4]
+participantRows = [1, 2]
+participantColumns = [1, 2, 3, 4]
 
 def eventsSearch(request):
     context = {
         'events': Event.objects.all(),
-        'participantRows': participantRows
+        'participantRows': participantRows,
+        'participantColumns': participantColumns
         }
     return render(request, "main/events_search.html", context)
 
