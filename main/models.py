@@ -16,9 +16,9 @@ class Profile(models.Model):
 class Event(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     users = models.ManyToManyField(User, related_name="users_list", blank=True)
-    addDate = models.DateField(default=timezone.now)
-    startDate = models.DateField()
-    endDate = models.DateField()
+    addDate = models.DateTimeField(default=timezone.now)
+    startDate = models.DateTimeField()
+    endDate = models.DateTimeField()
     title = models.CharField(max_length=20)
     description = models.CharField(max_length=300)
 
