@@ -33,54 +33,19 @@ def profileHome(request, username):
 
     return render(request, 'main/profile_home.html', context)
 
-events_ = [
-    {
-        'title': 'Tytuł ogłoszenia',
-        'description': 'Ogólny opis wydarzenia cokolwiek tutaj może być.',
-        'date': '25.12.2023'
-    },
-    {
-        'title': 'Tytuł ogłoszenia',
-        'description': 'Ogólny opis wydarzenia cokolwiek tutaj może być.',
-        'date': '26.12.2023'
-    },
-    {
-        'title': 'Tytuł ogłoszenia',
-        'description': 'Ogólny opis wydarzenia cokolwiek tutaj może być.',
-        'date': '27.12.2023'
-    },
-    {
-        'title': 'Tytuł ogłoszenia',
-        'description': 'Ogólny opis wydarzenia cokolwiek tutaj może być.',
-        'date': '28.12.2023'
-    },
-    {
-        'title': 'Tytuł ogłoszenia',
-        'description': 'Ogólny opis wydarzenia cokolwiek tutaj może być.',
-        'date': '29.12.2023'
-    },
-    {
-        'title': 'Tytuł ogłoszenia',
-        'description': 'Ogólny opis wydarzenia cokolwiek tutaj może być.',
-        'date': '30.12.2023'
-    },
-    {
-        'title': 'Tytuł ogłoszenia',
-        'description': 'Ogólny opis wydarzenia cokolwiek tutaj może być.',
-        'date': '31.12.2023'
-    }
-]
-
-participantRows = [1, 2]
-participantColumns = [1, 2, 3, 4]
-
 def eventsSearch(request):
     context = {
         'events': Event.objects.all(),
-        'participantRows': participantRows,
-        'participantColumns': participantColumns
         }
     return render(request, "main/events_search.html", context)
+
+def eventsInfo(request, id):
+    currentEvent = get_object_or_404(Event, id=id)
+    context = {
+        'events': Event.objects.all(),
+        'currentEvent': currentEvent,
+    }
+    return render(request, "main/events_info.html", context)
 
 def eventsAdd(request):
     return render(request, "main/events_add.html")
