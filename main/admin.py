@@ -18,7 +18,8 @@ class EventsAdmin(admin.ModelAdmin):
         'startDate',
         'endDate',
         'title',
-        'description'
+        'description',
+        'accepted'
     )
     filter_horizontal = ('users',)
 

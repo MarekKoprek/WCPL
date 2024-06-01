@@ -16,6 +16,7 @@ active
             <div class="container mb-2">
                 <div class="container-fluid" style="height: 530px; max-height: 530px; overflow-y: scroll;">
                     {% for event in events %}
+                    {% if event.accepted %}
                     <div class="row rounded border border-5 mb-2 bg-white">
                         <div class="col-md-1">
                             <div class="d-flex justify-content-center" style="height: 100%;width: 100%;">
@@ -24,12 +25,13 @@ active
                         </div>
                         <a class="col-md-9 btn pt-2 text-start" href="{% url 'events-info' event.id %}">
                             <h4 class="fw-bold">{{ event.title }}</h4>
-                            <p class="fs-5">{{ event.description }}</p>                   
+                            <p class="fs-5">{{ event.description|slice:":50" }}</p>                   
                         </a>
                         <div class="col-md-2 text-end pt-2 text-muted">
                             {{ event.startDate }}
                         </div>
                     </div>
+                    {% endif %}
                     {% endfor %}
                 </div>
                 <div class="row px-5 mt-2">
