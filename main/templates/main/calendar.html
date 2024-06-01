@@ -26,7 +26,7 @@ active
                                 title: "{{ data.title }}",
                                 start: "{{ data.startDate|date:'Y-m-d' }}",
                                 end: "{{ data.endDate|date:'Y-m-d' }}",
-                                url: "{% url 'events-search' %}"
+                                url: "{% url 'events-info' data.id %}"
                             }{% if not forloop.last %},{% endif %}
                             {% endfor %}
                         ]
