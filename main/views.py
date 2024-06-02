@@ -48,6 +48,18 @@ def eventsInfo(request, id):
     return render(request, "main/events_info.html", context)
 
 def eventsAdd(request):
+    event = get_object_or_404(Event)
+    userCurrent = request.user
+
+    if request.method == 'POST':
+        event.author = userCurrent.username
+        event.startDate = 
+        event.endDate =
+        event.title = request.POST.get('title')
+        event.description = request.POST.get('description')
+
+        return redirect('events-search')
+
     return render(request, "main/events_add.html")
 
 def calendar(request):
