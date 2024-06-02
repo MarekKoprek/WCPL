@@ -15,4 +15,9 @@ class ProfileForm(forms.ModelForm):
 class EventForm(forms.ModelForm):
     class Meta:
         model = Event
-        fields = ['title', 'description', 'date_begin', 'date_end']
+        fields = ['title', 'description', 'startDate', 'endDate']
+        
+class ParticipationForm(forms.ModelForm):
+    class Meta:
+        model = Event
+        fields = []
