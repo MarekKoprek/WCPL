@@ -20,7 +20,8 @@ class Event(models.Model):
     startDate = models.DateTimeField()
     endDate = models.DateTimeField()
     title = models.CharField(max_length=20)
-    description = models.CharField(max_length=300)
+    description = models.CharField(max_length=620)
+    accepted = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title
