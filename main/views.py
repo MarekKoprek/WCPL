@@ -45,9 +45,10 @@ def eventsInfo(request, id):
     currentUser = request.user
     
     if request.method == 'POST':
-        form = ParticipationForm(request.POST)
-        currentEvent.users.add(currentUser)
-        currentEvent.save()
+        form = ParticipationForm(request.POST) 
+        if currentUser.username != 'admin':
+            currentEvent.users.add(currentUser)
+            currentEvent.save()
     else:
         form = ParticipationForm()
         

@@ -24,7 +24,7 @@
     <ul class="navbar-nav mr-auto">
         <li class="nav-item">
             <div class="row" style="height: 120px;">
-                {% for user in currentEvent.users.all|slice:":15" %}
+                {% for user in currentEvent.users.all|slice:":12" %}
                 <div class="col-md-3">
                     <a class="nav-link" href="{% url 'profile-home'  user.username %}" style="color: inherit;">{{ user.first_name }} {{ user.last_name }}</a>
                 </div>
