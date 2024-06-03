@@ -2,9 +2,9 @@
 {% load static %}
 
 {% block event %}
-<div class="row py-3 px-1 justify-content-center align-items-center" style="height: 179px;">
+<div class="row py-3 px-1 justify-content-center align-items-center" style="height: 180px;">
     <div class="col-md-3">
-        <img class="rounded" src="{% static 'main/event_blank.png' %}" alt="event-icon" style="width: 100%;height: 100%;">
+        <img class="rounded" src="{% static 'main/event_blank.png' %}" alt="event-icon" style="width: 144px;height: 144px;">
     </div>
     <div class="col-md-9">
         <div class="container text-center">
@@ -23,8 +23,8 @@
 <div class="container">
     <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-            <div class="row" style="height: 80px;">
-                {% for user in currentEvent.users.all|slice:":10" %}
+            <div class="row" style="height: 120px;">
+                {% for user in currentEvent.users.all|slice:":15" %}
                 <div class="col-md-3">
                     <a class="nav-link" href="{% url 'profile-home'  user.username %}" style="color: inherit;">{{ user.first_name }} {{ user.last_name }}</a>
                 </div>
@@ -34,8 +34,11 @@
     </ul>
 </div>
 <div class="row px-5">
-    <a class="col-md-12 btn pt-1 rounded-pill text-center" href="{% url 'events-add' %}" style="background-color: #F2785C">
-        <h1 class="fw-bold">Zgłoś udział</h1>
-    </a>
+    <form method="POST">
+        {% csrf_token %}
+        <button class="col-md-12 btn pt-1 rounded-pill text-center" type="submit" style="background-color: #F2785C">
+            <h1 class="fw-bold">Zgłoś udział</h1>
+        </button>
+    </form>
 </div>
 {% endblock event %}

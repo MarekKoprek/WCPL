@@ -13,8 +13,9 @@ active
 <div class="container-fluid" style="background-color: #F1E7E1; font-family:Bree Serif">
     <div class="container">
         <form method="POST">
-            <div class="row mx-4">
-                <div class="col-md-6 border-right">
+            {% csrf_token %}
+            <div class="row mx-4" style="height: 673px;">
+                <div class="col-md-6 col-sm-12">
                     <div class="d-flex justify-content-center align-items-center" style="height: 100%;">
                         <div class="row justify-content-center align-items-center">
                             <div class="col-md-12 text-center">
@@ -24,39 +25,39 @@ active
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="row text-center mt-3">
-                        <div class="col-md-12">
-                            <label class="labels h3">Tytuł</label>
-                            <input type="text" class="form-control text-center" name="title" placeholder="">
+                <div class="col-md-6 col-sm-12">
+                    <div class="d-flex align-items-center ms-3" style="height: 100%;">
+                        <div class="row text-center mt-3">
+                            <div class="col-md-12">
+                                <label class="labels h3">Tytuł</label>
+                                <input type="text" class="form-control text-center" name="title" placeholder="">
+                            </div>
+                            <div class="col-md-12">
+                                <label class="labels h3">Opis</label>
+                                <textarea type="text" class="form-control text-center" name="description" placeholder=""></textarea>
+                            </div>
+                            <div class="col-md-12">
+                                <h3>Data rozpoczęcia</h3>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control text-center" name="date_begin" placeholder="DD/MM/YYYY">
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control text-center" name="hour_begin" placeholder="HH:MM">
+                            </div>
+                            <div class="col-md-12">
+                                <h3>Data zakończenia</h3>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control text-center" name="date_end" placeholder="DD/MM/YYYY">
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control text-center" name="hour_end" placeholder="HH:MM">
+                            </div>
+                            <button class="col-md-12 text-center btn rounded-pill my-3" type="submit" style="background-color: #F2785C">
+                                <h1 class="fw-bold">Zatwierdź</h1>
+                            </button>
                         </div>
-                        <div class="col-md-12">
-                            <label class="labels h3">Opis</label>
-                            <textarea type="text" class="form-control text-center" name="description" placeholder=""></textarea>
-                        </div>
-                        <div class="col-md-12">
-                            <h3>Data rozpoczęcia</h3>
-                        </div>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control text-center" name="date_begin" placeholder="DD/MM/YYYY">
-                        </div>
-                        <div class="col-md-4">
-                            <input type="text" class="form-control text-center" name="hour_begin" placeholder="HH:MM">
-                        </div>
-                        <div class="col-md-12">
-                            <h3>Data zakończenia</h3>
-                        </div>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control text-center" name="date_end" placeholder="DD/MM/YYYY">
-                        </div>
-                        <div class="col-md-4">
-                            <input type="text" class="form-control text-center" name="hour_end" placeholder="HH:MM">
-                        </div>
-                    </div>
-                    <div class="row py-3 px-3">
-                        <a class="col-md-12 text-center btn rounded-pill" type="submit" href="{% url 'events-search' %}" style="background-color: #F2785C">
-                            <h1 class="fw-bold">Zatwierdź</h1>
-                        </a>
                     </div>
                 </div>
             </div>

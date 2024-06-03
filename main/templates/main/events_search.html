@@ -12,15 +12,15 @@ active
 {% block content %}
 <div class="container-fluid" style="background-color: #F1E7E1; font-family:Bree Serif">
     <div class="row">
-        <div class="col-md-6 py-2 ps-5 pe-4 border">
+        <div class="col-md-6 col-sm-12 py-2 ps-5 pe-4 border">
             <div class="container mb-2">
-                <div class="container-fluid" style="height: 530px; max-height: 530px; overflow-y: scroll;">
+                <div class="container-fluid" style="height: 571px; max-height: 571px; overflow-y: scroll;">
                     {% for event in events %}
                     {% if event.accepted %}
-                    <div class="row rounded border border-5 mb-2 bg-white">
+                    <div class="row rounded border border-5 mb-2 bg-white" style="height: 95px;">
                         <div class="col-md-1">
-                            <div class="d-flex justify-content-center" style="height: 100%;width: 100%;">
-                                <img class="rounded" src="{% static 'main/event_blank.png' %}" alt="event-icon" style="width: 100%;height: 100%;">
+                            <div class="d-flex justify-content-center align-items-center" style="height: 100%;width: 100%;">
+                                <img class="rounded" src="{% static 'main/event_blank.png' %}" alt="event-icon" style="width: 50px; height: 50px;">
                             </div>
                         </div>
                         <a class="col-md-9 btn pt-2 text-start" href="{% url 'events-info' event.id %}">
@@ -41,7 +41,7 @@ active
                 </div>
             </div>
         </div>
-        <div class="col-md-6 py-2 pe-3 border">
+        <div class="col-md-6 col-sm-12 py-2 pe-3 border">
             <div class="container">
                 {% block event %}{% endblock %}
             </div>

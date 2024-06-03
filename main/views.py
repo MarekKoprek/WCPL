@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from .models import Profile, Event
+from .forms import EventForm, ParticipationForm
 from json import dumps
 
 
@@ -41,14 +42,35 @@ def eventsSearch(request):
 
 def eventsInfo(request, id):
     currentEvent = get_object_or_404(Event, id=id)
+    currentUser = request.user
+    
+    if request.method == 'POST':
+        form = ParticipationForm(request.POST)
+        currentEvent.users.add(currentUser)
+        currentEvent.save()
+    else:
+        form = ParticipationForm()
+        
     context = {
         'events': Event.objects.all(),
         'currentEvent': currentEvent,
+        'form': form
     }
     return render(request, "main/events_info.html", context)
 
 def eventsAdd(request):
-    return render(request, "main/events_add.html")
+    userCurrent = request.user
+    
+    if request.method == 'POST':
+        form = EventForm(request.POST)
+        author = userCurrent
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        Event.objects.create(author=author, title=title, description=description)
+        return redirect('events-search')
+    else:
+        form = EventForm()
+    return render(request, "main/events_add.html", {'form': form})
 
 def calendar(request):
     context = {
