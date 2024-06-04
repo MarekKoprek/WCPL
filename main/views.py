@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from .models import Profile, Event
 from .forms import EventForm, ParticipationForm
 from json import dumps
+from datetime import datetime
 
 
 def profileHome(request, username):
@@ -45,9 +46,10 @@ def eventsInfo(request, id):
     currentUser = request.user
     
     if request.method == 'POST':
-        form = ParticipationForm(request.POST)
-        currentEvent.users.add(currentUser)
-        currentEvent.save()
+        form = ParticipationForm(request.POST) 
+        if currentUser.username != 'admin':
+            currentEvent.users.add(currentUser)
+            currentEvent.save()
     else:
         form = ParticipationForm()
         
@@ -66,7 +68,27 @@ def eventsAdd(request):
         author = userCurrent
         title = request.POST.get('title')
         description = request.POST.get('description')
-        Event.objects.create(author=author, title=title, description=description)
+        startDate = request.POST.get('dateBegin')
+        startDateList = startDate.split('-')
+        startTime = request.POST.get('hourBegin')
+        startTimeList = startTime.split(':')
+        endDate = request.POST.get('dateEnd')
+        endDateList = endDate.split('-')
+        endTime = request.POST.get('hourEnd')
+        endTimeList = endTime.split(':')
+        
+        startDate = datetime(int(startDateList[0]), int(startDateList[1]), int(startDateList[2]), int(startTimeList[0]), int(startTimeList[1], 0))
+        endDate = datetime(int(endDateList[0]), int(endDateList[1]), int(endDateList[2]), int(endTimeList[0]), int(endTimeList[1], 0))
+        
+        if(startDate > endDate):
+            return redirect('events-add')
+            
+        Event.objects.create(author=author, 
+                            title=title, 
+                            description=description, 
+                            startDate=startDate,
+                            endDate=endDate)
+            
         return redirect('events-search')
     else:
         form = EventForm()
