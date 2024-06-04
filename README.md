@@ -18,7 +18,11 @@ cd Scripts
 ```bash
 py -m pip install Django
 ```  
-**5. Należy sklonować projekt z github**
+**5. Należy zainstalować bibliotekę**
+```bash
+py -m pip install Pillow
+```  
+**6. Należy sklonować projekt z github**
 ```bash
 git clone https://github.com/MarekKoprek/WCPL.git
 ```
@@ -39,7 +43,7 @@ python manage.py runserver
 **Adres strony `http://127.0.0.1:8000/login/`**  
 **Dane konta testowego (student):**
 - Username: test
-- Password: Bizon1973@
+- Password: Bizon1973@  
 **(Firma)**
 - Username: testFirm
 - Password: Password123@
