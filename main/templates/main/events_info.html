@@ -5,7 +5,7 @@
 <div class="row px-1 justify-content-center align-items-center" style="height: 180px;">
     <div class="col-md-3 col-sm-12">
         <div class="d-flex justify-content-center align-items-center">
-            <img class="rounded" src="{% static 'main/event_blank.png' %}" alt="event-icon" style="width: 144px;height: 144px;">
+            <img class="rounded" src="{{ currentEvent.picture.url }}" alt="event-icon" style="width: 144px;height: 144px;">
         </div>
     </div>
     <div class="col-md-9 col-sm-12">
@@ -36,11 +36,19 @@
     </ul>
 </div>
 <div class="row px-5">
+    {% if currentEvent.author == currentUser %}
+    <div class="container">
+        <a class="col-md-12 btn pt-1 rounded-pill text-center" href="{% url 'events-edit' currentEvent.id %}" style="background-color: #F2785C">
+            <h1 class="fw-bold">Edytuj wydarzenie</h1>
+        </a>
+    </div>
+    {% else %}
     <form method="POST">
         {% csrf_token %}
         <button class="col-md-12 btn pt-1 rounded-pill text-center" type="submit" style="background-color: #F2785C">
             <h1 class="fw-bold">Zgłoś udział</h1>
         </button>
     </form>
+    {% endif %}
 </div>
 {% endblock event %}
