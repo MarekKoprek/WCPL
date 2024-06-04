@@ -5,7 +5,6 @@ from .models import Profile, Event
 from .forms import EventForm, ParticipationForm
 from json import dumps
 from datetime import datetime
-from django.utils import timezone
 
 @login_required
 def profileHome(request, username):
@@ -116,7 +115,7 @@ def eventsAdd(request):
         form = EventForm()
     return render(request, "main/events_add.html", {'form': form})
 
-<<<<<<< HEAD
+@login_required
 def eventsEdit(request, id):
     currentEvent = get_object_or_404(Event, id=id)
     currentUser = request.user
@@ -164,9 +163,7 @@ def eventsEdit(request, id):
     
     return render(request, "main/events_edit.html", context)
 
-=======
 @login_required
->>>>>>> main
 def calendar(request):
     current_user = request.user
     events = Event.objects.filter(users=current_user)
