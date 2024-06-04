@@ -95,8 +95,10 @@ def eventsAdd(request):
     return render(request, "main/events_add.html", {'form': form})
 
 def calendar(request):
+    current_user = request.user
+    events = Event.objects.filter(users=current_user)
     context = {
-        'events' : Event.objects.all()
+        'events' : events
     }
     return render(request, "main/calendar.html", context)
 
