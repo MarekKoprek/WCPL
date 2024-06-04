@@ -26,9 +26,15 @@
     <ul class="navbar-nav mr-auto">
         <li class="nav-item">
             <div class="row" style="min-height: 120px;">
-                {% for user in currentEvent.users.all|slice:":12" %}
+                {% for profile in profiles|slice:":12" %}
                 <div class="col-md-3">
-                    <a class="nav-link" href="{% url 'profile-home'  user.username %}" style="color: inherit;">{{ user.first_name }} {{ user.last_name }}</a>
+                    <a class="nav-link" href="{% url 'profile-home'  user.username %}" style="color: inherit;">
+                        {% if profile.user_type == 'student' %}
+                        {{ profile.user.first_name }} {{ profile.user.last_name }}
+                        {% else %}
+                        {{ profile.nameFirm }}
+                        {% endif %}
+                    </a>
                 </div>
                 {% endfor %}
             </div>
