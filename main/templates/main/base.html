@@ -36,17 +36,17 @@
                 <li class="nav-item">
                   <a class="nav-link {% block events_activate %}{% endblock %}" href="{% url 'events-search' %}">Wydarzenia</a>
                 </li>
+                {% if user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link {% block profile_activate %}{% endblock %}" href="{% url 'profile-home' user.username %}">Profil</a>
                 </li>
-
-
-                    <li class="nav-item">
-                        <a class="nav-link {% block login %}{% endblock %}" href="{% url 'login' %}">Zaloguj się</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% block register %}{% endblock %}" href="{% url 'register' %}">Zarejestruj się</a>
-                    </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link {% block login %}{% endblock %}" href="{% url 'login' %}">Zaloguj się</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% block register %}{% endblock %}" href="{% url 'register' %}">Zarejestruj się</a>
+                </li>
             </div>
         </nav>
         {% block content %}{% endblock %}
