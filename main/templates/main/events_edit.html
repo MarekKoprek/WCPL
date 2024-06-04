@@ -1,0 +1,22 @@
+{% extends "main/events_add.html" %}
+{% load static %}
+
+{% block head %}
+<title>Events edit</title>
+{% endblock head %}
+
+{% block events_activate %}
+active
+{% endblock events_activate %}
+
+{% block image %}
+{{ currentEvent.picture }}
+{% endblock image %}
+
+{% block title %}
+{{ currentEvent.title }}
+{% endblock title %}
+
+{% block description %}
+{{ currentEvent.description }}
+{% endblock description %}

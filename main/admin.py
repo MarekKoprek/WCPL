@@ -14,6 +14,7 @@ class ProfileAdmin(admin.ModelAdmin):
 class EventsAdmin(admin.ModelAdmin):
     list_display = (
         'author',
+        'picture',
         'addDate',
         'startDate',
         'endDate',

@@ -20,7 +20,7 @@ active
                     <div class="row rounded border border-5 mb-2 bg-white">
                         <div class="col-md-1">
                             <div class="d-flex justify-content-center align-items-center" style="height: 100%;width: 100%;">
-                                <img class="rounded" src="{% static 'main/event_blank.png' %}" alt="event-icon" style="width: 50px; height: 50px;">
+                                <img class="rounded" src="{{ event.picture.url }}" alt="event-icon" style="width: 50px; height: 50px;">
                             </div>
                         </div>
                         <a class="col-md-9 btn pt-2 text-start" href="{% url 'events-info' event.id %}">
