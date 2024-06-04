@@ -1,11 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from .models import Profile, Event
 from .forms import EventForm, ParticipationForm
 from json import dumps
 from datetime import datetime
 
-
+@login_required
 def profileHome(request, username):
     userInfo = get_object_or_404(User, username=username)
     profile = get_object_or_404(Profile, user=userInfo)
@@ -35,12 +36,14 @@ def profileHome(request, username):
 
     return render(request, 'main/profile_home.html', context)
 
+@login_required
 def eventsSearch(request):
     context = {
         'events': Event.objects.all(),
         }
     return render(request, "main/events_search.html", context)
 
+@login_required
 def eventsInfo(request, id):
     currentEvent = get_object_or_404(Event, id=id)
     currentUser = request.user
@@ -60,6 +63,7 @@ def eventsInfo(request, id):
     }
     return render(request, "main/events_info.html", context)
 
+@login_required
 def eventsAdd(request):
     userCurrent = request.user
     
@@ -94,6 +98,7 @@ def eventsAdd(request):
         form = EventForm()
     return render(request, "main/events_add.html", {'form': form})
 
+@login_required
 def calendar(request):
     current_user = request.user
     events = Event.objects.filter(users=current_user)
