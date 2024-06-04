@@ -37,7 +37,7 @@
                   <a class="nav-link {% block events_activate %}{% endblock %}" href="{% url 'events-search' %}">Wydarzenia</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {% block profile_activate %}{% endblock %}" href="{% url 'profile-home' 'romanbeznosenko' %}">Profil</a>
+                    <a class="nav-link {% block profile_activate %}{% endblock %}" href="{% url 'profile-home' user.username %}">Profil</a>
                 </li>
 
 
