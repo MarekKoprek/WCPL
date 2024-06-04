@@ -12,7 +12,7 @@ def profileHome(request, username):
     profile = get_object_or_404(Profile, user=userInfo)
     userCurrent = request.user
 
-    if request.method == 'POST':
+    if request.method == 'POST' and profile.user_type == 'student':
         userInfo.first_name = request.POST.get('first_name', '')
         userInfo.last_name = request.POST.get('last_name', '')
         userInfo.email = request.POST.get('email', '')
@@ -27,6 +27,15 @@ def profileHome(request, username):
         profile.save()
 
         return redirect('profile-home', username=username)
+    
+    elif request.method == 'POST' and profile.user_type == 'firm':
+        profile.nameFirm = request.POST.get('name', '')
+        profile.website = request.POST.get('website', '')
+        profile.bio = request.POST.get('bio', '')
+
+        profile.save()
+
+        return redirect('profile-home', username=username)
 
     context = {
         'userInfo' : userInfo,
@@ -34,7 +43,10 @@ def profileHome(request, username):
         'userCurrent' : userCurrent
     }
 
-    return render(request, 'main/profile_home.html', context)
+    if profile.user_type == 'student':
+        return render(request, 'main/profile_home.html', context)
+    else:
+        return render(request, 'main/profile_firm.html', context)
 
 @login_required
 def eventsSearch(request):
