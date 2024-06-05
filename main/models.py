@@ -11,6 +11,7 @@ class Profile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     user_type = models.CharField(max_length=10, choices=USER_TYPE_CHOICES, default='student')
+    picture = models.ImageField(default='default.jpg', upload_to='event_pics')
     phone_number = models.CharField(max_length=20, null=True, blank=True)
     faculty = models.CharField(max_length=40, null=True, blank=True)
     course = models.CharField(max_length=50, null=True, blank=True)
