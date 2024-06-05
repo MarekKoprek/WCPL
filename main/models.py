@@ -24,7 +24,7 @@ class Profile(models.Model):
         return self.user.username
 
 class Event(models.Model):  
-    picture = models.ImageField(default='default.jpg', upload_to='event_pics')
+    picture = models.ImageField(default='default.jpg', upload_to='profile_pictures')
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     users = models.ManyToManyField(User, related_name="users_list", blank=True)
     addDate = models.DateTimeField(default=timezone.now)
