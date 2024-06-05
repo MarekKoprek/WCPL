@@ -19,4 +19,4 @@ class UserRegisterForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super(UserRegisterForm, self).__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
-            field.help_text = None  # Remove help text
+            field.help_text = None
