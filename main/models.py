@@ -11,7 +11,7 @@ class Profile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     user_type = models.CharField(max_length=10, choices=USER_TYPE_CHOICES, default='student')
-    picture = models.ImageField(default='default.jpg', upload_to='event_pics')
+    picture = models.ImageField(default='user_icon.png', upload_to='profile_pictures')
     phone_number = models.CharField(max_length=20, null=True, blank=True)
     faculty = models.CharField(max_length=40, null=True, blank=True)
     course = models.CharField(max_length=50, null=True, blank=True)
@@ -24,7 +24,7 @@ class Profile(models.Model):
         return self.user.username
 
 class Event(models.Model):  
-    picture = models.ImageField(default='default.jpg', upload_to='profile_pictures')
+    picture = models.ImageField(default='default.jpg', upload_to='event_pics')
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     users = models.ManyToManyField(User, related_name="users_list", blank=True)
     addDate = models.DateTimeField(default=timezone.now)
