@@ -22,7 +22,7 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
 
-class Event(models.Model):
+class Event(models.Model):  
     picture = models.ImageField(default='default.jpg', upload_to='event_pics')
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     users = models.ManyToManyField(User, related_name="users_list", blank=True)
