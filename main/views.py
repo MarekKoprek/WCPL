@@ -59,13 +59,18 @@ def eventsSearch(request):
 def eventsInfo(request, id):
     currentEvent = get_object_or_404(Event, id=id)
     currentUser = request.user
-    print(currentEvent.users.all)
+    profiles = []
+    for user in currentEvent.users.all():
+        profile = Profile.objects.get(user=user)
+        profiles.append(profile)
     
     if request.method == 'POST':
         form = ParticipationForm(request.POST) 
         if currentUser.username != 'admin':
             currentEvent.users.add(currentUser)
             currentEvent.save()
+        
+        return redirect('events-info', id=id)
     else:
         form = ParticipationForm()
         
@@ -73,6 +78,7 @@ def eventsInfo(request, id):
         'events': Event.objects.all(),
         'currentEvent': currentEvent,
         'currentUser': currentUser,
+        'profiles': profiles,
         'form': form
     }
     return render(request, "main/events_info.html", context)
