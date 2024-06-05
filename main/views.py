@@ -23,6 +23,9 @@ def profileHome(request, username):
         profile.semester = request.POST.get('semester', '')
         profile.bio = request.POST.get('bio', '')
 
+        if 'picture' in request.FILES:
+            profile.picture = request.FILES['picture']
+
         userInfo.save()
         profile.save()
 
@@ -32,6 +35,9 @@ def profileHome(request, username):
         profile.nameFirm = request.POST.get('name', '')
         profile.website = request.POST.get('website', '')
         profile.bio = request.POST.get('bio', '')
+
+        if 'picture' in request.FILES:
+            profile.picture = request.FILES['picture']
 
         profile.save()
 
@@ -47,6 +53,8 @@ def profileHome(request, username):
         return render(request, 'main/profile_home.html', context)
     else:
         return render(request, 'main/profile_firm.html', context)
+
+
 
 @login_required
 def eventsSearch(request):

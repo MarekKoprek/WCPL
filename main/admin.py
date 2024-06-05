@@ -5,7 +5,7 @@ class ProfileAdmin(admin.ModelAdmin):
     list_display = ('user', 'user_type', 'bio')
 
     def get_fields(self, request, obj=None):
-        fields = ['user', 'user_type', 'bio']
+        fields = ['user', 'user_type', 'bio', 'picture']
         if obj:
             if obj.user_type == 'student':
                 fields.extend(['phone_number', 'faculty', 'course', 'semester'])
