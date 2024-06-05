@@ -17,7 +17,7 @@ class Profile(models.Model):
     semester = models.IntegerField(null=True, validators=[MinValueValidator(1), MaxValueValidator(7)], blank=True)
     nameFirm = models.CharField(max_length=50, default='Nokia', null=True, blank=True)
     website = models.CharField(max_length=100, default='https://www.nokia.com/', null=True, blank=True)
-    bio = models.TextField()
+    bio = models.TextField(blank=True)
 
     def __str__(self):
         return self.user.username
