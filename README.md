@@ -36,14 +36,14 @@ python manage.py runserver
 ## Strona administratora
 **Adres strony `http://127.0.0.1:8000/admin/`**  
 **Dane do konta administratora**
-- Username: admin@gmail.com
+- Username: admin
 - Password: admin
 
 ## Strona logowania 
 **Adres strony `http://127.0.0.1:8000/login/`**  
 **Dane konta testowego (student):**
-- Username: test
-- Password: Bizon1973@  
+- Username: testowy
+- Password: testowehaslo
 **(Firma)**
 - Username: testFirm
 - Password: Password123@

@@ -11,12 +11,12 @@ class Profile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     user_type = models.CharField(max_length=10, choices=USER_TYPE_CHOICES, default='student')
-    phone_number = models.CharField(max_length=20, null=True)
-    faculty = models.CharField(max_length=40, null=True)
-    course = models.CharField(max_length=50, null=True)
-    semester = models.IntegerField(null=True, validators=[MinValueValidator(1), MaxValueValidator(7)])
-    nameFirm = models.CharField(max_length=50, default='Nokia', null=True)
-    website = models.CharField(max_length=100, default='https://www.nokia.com/', null=True)
+    phone_number = models.CharField(max_length=20, null=True, blank=True)
+    faculty = models.CharField(max_length=40, null=True, blank=True)
+    course = models.CharField(max_length=50, null=True, blank=True)
+    semester = models.IntegerField(null=True, validators=[MinValueValidator(1), MaxValueValidator(7)], blank=True)
+    nameFirm = models.CharField(max_length=50, default='Nokia', null=True, blank=True)
+    website = models.CharField(max_length=100, default='https://www.nokia.com/', null=True, blank=True)
     bio = models.TextField()
 
     def __str__(self):
