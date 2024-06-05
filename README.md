@@ -11,8 +11,7 @@ py -m venv (nazwa_środowiska)
 **3.Należy wykonać następujące polecenia**  
 ```bash
 cd nazwa_środowiska
-cd Scripts
-./activate
+Scripts\activate
 ```  
 **4. Gdy z lewej strony pojawi sie nazwa środowiska należy zainstalować pakiet Django poprzez komendę**
 ```bash
