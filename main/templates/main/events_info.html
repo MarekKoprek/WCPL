@@ -28,7 +28,7 @@
             <div class="row" style="min-height: 120px;">
                 {% for profile in profiles|slice:":12" %}
                 <div class="col-md-3">
-                    <a class="nav-link" href="{% url 'profile-home'  user.username %}" style="color: inherit;">
+                    <a class="nav-link" href="{% url 'profile-home'  profile.user.username %}" style="color: inherit;">
                         {% if profile.user_type == 'student' %}
                         {{ profile.user.first_name }} {{ profile.user.last_name }}
                         {% else %}
