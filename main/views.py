@@ -186,3 +186,6 @@ def calendar(request):
     }
     return render(request, "main/calendar.html", context)
 
+@login_required
+def bug(request):
+    return render(request, "main/bug.html")
