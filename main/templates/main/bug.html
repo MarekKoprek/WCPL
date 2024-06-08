@@ -9,5 +9,28 @@ active
 {% endblock profile_activate %}
 
 {% block content %}
-
+<div class="container">
+    <div class="main">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="container rounded bg-white mt-5 mb-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="p-2 py-5">
+                            <div class="row mt-3">
+                                <div class="col-md-12">
+                                    <label class="labels">Na której stronie znalazłeś błąd?</label>
+                                    <input type="text" class="form-control" name="section" placeholder="Section">
+                                    <label class="labels">Opisz problem</label>
+                                    <textarea type="text" class="form-control" name="description" placeholder="description">Opisz problem</textarea>
+                                </div>
+                            </div>
+                            <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Zgłoś</button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock content %}
