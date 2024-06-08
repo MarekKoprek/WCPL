@@ -188,4 +188,6 @@ def calendar(request):
 
 @login_required
 def bug(request):
+
+
     return render(request, "main/bug.html")
