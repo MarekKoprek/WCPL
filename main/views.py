@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from .models import Profile, Event
+from .models import Profile, Event, Bug
 from .forms import EventForm, ParticipationForm
 from json import dumps
 from datetime import datetime
@@ -188,6 +188,14 @@ def calendar(request):
 
 @login_required
 def bug(request):
+    if request.method == 'POST':
+        author = request.user
+        section = request.POST.get('section')
+        description = request.POST.get('description')
 
+        newBug = Bug(author=author, section=section, description=description)
+        newBug.save()
+
+        return redirect('profile-home', username=author.username)
 
     return render(request, "main/bug.html")
