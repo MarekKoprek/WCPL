@@ -51,6 +51,11 @@ active
                             <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
                             {% endif %}
                         </form>
+                        {% if userCurrent.username == userInfo.username %}
+                            <div class="mt-3 text-center">
+                                <a href="#" class="btn btn-warning text-white">Znalazłeś błąd?</a>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>

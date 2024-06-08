@@ -40,10 +40,11 @@ python manage.py runserver
 
 ## Strona logowania 
 **Adres strony `http://127.0.0.1:8000/login/`**  
-**Dane konta testowego (student):**
+**Dane konta testowego (Student):**
 - Username: testowy
-- Password: testowehaslo
-**(Firma)**
+- Password: testowehaslo   
+
+**Dane konta testowego (Firma):**
 - Username: testFirm
 - Password: Password123@
 
