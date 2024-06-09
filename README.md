@@ -52,6 +52,13 @@ python manage.py runserver
 
 ## Strona z kalendarzem 
 **Adres strony `http://127.0.0.1:8000/calendar/`**  
+### Opis: ###
+Strona kalendarza wyświetla widok kalendarza, który pokazuje wydarzenia, w których zalogowany użytkownik bierze udział.
+
+### Funkcje: ###
+- **Widok kalendarza:** Prezentuje miesięczny widok kalendarza.   
+- **Wyświetlanie Wydarzeń:** Pokazuje kiedy zaczyna i kończy się wydarzenie.   
+- **Nawigacja:** Umożliwia użytkownikom poruszanie się między miesiącami oraz powrót do dzisiejszej daty.   
 
 ## Strona z wydarzeniami 
 **Adres strony `http://127.0.0.1:8000/events/`**  
@@ -62,7 +69,19 @@ python manage.py runserver
 **Na przykład można użyć następującej strony:**
 **`http://127.0.0.1:8000/profile/romanbeznosenko`**
 
-## Strona z profilem 
-**Adres strony `http://127.0.0.1:8000/profile/<username>`**  
+### Opis: ###
+Strona profilu użytkownika wyświetla informacje o użytkowniku, jego dane osobowe oraz zdjęcie.
+
+### Funkcje: ###
+- **Wyświetlanie danych użytkownika:** Pokazuje nazwę użytkownika, dane osobowe, zdjęcie profilowe.   
+- **Edycja profilu:** Umożliwia użytkownikowi edytowanie swojego profilu, w tym zmianę danych osobowych oraz zdjęcia profilowego.   
+- **Zgłaszanie błędów:** Użytkownik może zgłosić błąd.    
 
 
+## Strona ze zgłoszeniem błędu ##
+**Adres strony `http://127.0.0.1:8000/bug/`**  
+### Opis: ###
+Strona ze zgłoszeniem błędu umożliwia użytkownikom zgłaszanie problemów związanych z aplikacją.
+
+### Funkcje: ###
+- **Formularz zgłaszania błędu:** Użytkownicy mogą wypełnić formularz, aby opisać napotkany problem.   
