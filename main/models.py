@@ -30,7 +30,11 @@ class Event(models.Model):
     addDate = models.DateTimeField(default=timezone.now)
     startDate = models.DateTimeField(default=timezone.now)
     endDate = models.DateTimeField(default=timezone.now)
+<<<<<<< HEAD
     title = models.CharField(max_length=100)
+=======
+    title = models.CharField(max_length=25)
+>>>>>>> b70d4665d5d47cb353d8be7ba69869030dbb49ab
     description = models.CharField(max_length=620)
     accepted = models.IntegerField(default=0)
 
