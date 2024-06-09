@@ -14,6 +14,7 @@ urlpatterns = [
     path('events/add', views.eventsAdd, name='events-add'),
     path('register/', user_views.register, name='register'),
     path('login/', LoginView.as_view(), name='login'),
+    path('bug/', views.bug, name='bug')
 ]
 
 if settings.DEBUG:

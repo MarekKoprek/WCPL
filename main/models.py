@@ -39,3 +39,9 @@ class Event(models.Model):
 
     class Meta:
         ordering = ['startDate']
+
+
+class Bug(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    section = models.CharField(max_length=40)
+    description = models.TextField(blank=True)
