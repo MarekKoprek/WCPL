@@ -41,6 +41,7 @@ python manage.py runserver
 ### Opis: ###
 Strona administratora umożliwia przeglądanie bazy danych, wprowadzanie zmian w niej, oraz dodawanie nowych rekordów.
 Aby wprowadzić zmiany należy wybrać po lewej stronie model, a następnie przejść do wybranego rekordu poprzez kliknięcie pierwszej kolumny w danym rekordzie. Po wprowadzeniu zmian należy je na dole zapisać. Można również dodać rekord w prawym górnym rogu każdego modelu.
+
 Dostępne są 4 modele: 
 - Użytkownicy (login, haslo (zaszyfrowane), imię, nazwisko, email, uprawnienia itd.)
 - Profile użytkowników (Dane zależne od typu użytkonika (student, firma))
