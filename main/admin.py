@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Profile, Event
+from .models import Profile, Event, Bug
 
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ('user', 'user_type', 'bio')
@@ -27,5 +27,13 @@ class EventsAdmin(admin.ModelAdmin):
     )
     filter_horizontal = ('users',)
 
+class BugAdmin(admin.ModelAdmin):
+    list_display = (
+        'author',
+        'section',
+        'description'
+    )
+
 admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Event, EventsAdmin)
+admin.site.register(Bug, BugAdmin)
