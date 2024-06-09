@@ -30,6 +30,7 @@ def profileHome(request, username):
 
         if 'picture' in request.FILES:
             profile.picture = request.FILES['picture']
+            profile.picture = resize_uploaded_image(profile.picture, 200, 200)
 
         userInfo.save()
         profile.save()
@@ -43,6 +44,7 @@ def profileHome(request, username):
 
         if 'picture' in request.FILES:
             profile.picture = request.FILES['picture']
+            profile.picture = resize_uploaded_image(profile.picture, 200, 200)
 
         profile.save()
 
