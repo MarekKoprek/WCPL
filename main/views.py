@@ -1,10 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from .models import Profile, Event
 from .forms import EventForm, ParticipationForm
 from json import dumps
 from datetime import datetime
+from PIL import Image
 
 @login_required
 def profileHome(request, username):
@@ -123,7 +125,13 @@ def eventsAdd(request):
                             description=description, 
                             startDate=startDate,
                             endDate=endDate)
-        else:    
+        else:   
+            img = Image.open(picture)
+        
+            if img.height > 200 or img.width > 200:
+                outputSize = (200, 200)
+                img.thumbnail(outputSize)
+                img.save(picture) 
             newEvent = Event.objects.create(author=author, 
                                 picture=picture,
                                 title=title, 
@@ -131,7 +139,7 @@ def eventsAdd(request):
                                 startDate=startDate,
                                 endDate=endDate)
         newEvent.users.add(userCurrent)
-                
+        
         return redirect('events-search')
     else:
         form = EventForm()
