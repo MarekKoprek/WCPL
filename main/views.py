@@ -5,6 +5,7 @@ from .models import Profile, Event, Bug
 from .forms import EventForm, ParticipationForm
 from json import dumps
 from datetime import datetime
+from PIL import Image
 
 @login_required
 def profileHome(request, username):
@@ -110,20 +111,34 @@ def eventsAdd(request):
         endTime = request.POST.get('hourEnd')
         endTimeList = endTime.split(':')
         
-        startDate = datetime(int(startDateList[0]), int(startDateList[1]), int(startDateList[2]), int(startTimeList[0]), int(startTimeList[1], 0))
-        endDate = datetime(int(endDateList[0]), int(endDateList[1]), int(endDateList[2]), int(endTimeList[0]), int(endTimeList[1], 0))
+        startDate = datetime(int(startDateList[0]), int(startDateList[1]), int(startDateList[2]), int(startTimeList[0]), int(startTimeList[1]), 0)
+        endDate = datetime(int(endDateList[0]), int(endDateList[1]), int(endDateList[2]), int(endTimeList[0]), int(endTimeList[1]), 0)
         
         now = datetime.now()
-        if(startDate > endDate or startDate < now):
+        if(startDate > endDate or startDate < now or len(title) > 25 or len(description) > 620):
             return redirect('events-add')
             
-        Event.objects.create(author=author, 
-                            picture=picture,
+        if picture == None:
+            newEvent = Event.objects.create(author=author, 
                             title=title, 
                             description=description, 
                             startDate=startDate,
                             endDate=endDate)
-            
+        else:   
+            img = Image.open(picture)
+        
+            if img.height > 200 or img.width > 200:
+                outputSize = (200, 200)
+                img.thumbnail(outputSize)
+                img.save(picture) 
+            newEvent = Event.objects.create(author=author, 
+                                picture=picture,
+                                title=title, 
+                                description=description, 
+                                startDate=startDate,
+                                endDate=endDate)
+        newEvent.users.add(userCurrent)
+        
         return redirect('events-search')
     else:
         form = EventForm()
@@ -155,10 +170,11 @@ def eventsEdit(request, id):
         endDate = datetime(int(endDateList[0]), int(endDateList[1]), int(endDateList[2]), int(endTimeList[0]), int(endTimeList[1], 0))
         
         now = datetime.now()
-        if(startDate > endDate or startDate < now):
+        if(startDate > endDate or startDate < now or len(title) > 25 or len(description) > 620):
             return redirect('events-edit', id=id)
         
-        currentEvent.picture = picture
+        if picture != None:
+            currentEvent.picture = picture
         currentEvent.title = title
         currentEvent.description = description
         currentEvent.startDate = startDate
