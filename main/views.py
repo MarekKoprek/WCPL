@@ -76,11 +76,19 @@ def eventsInfo(request, id):
     for user in currentEvent.users.all():
         profile = Profile.objects.get(user=user)
         profiles.append(profile)
+        
+    isFound = False
+    for user in currentEvent.users.all():
+        if user.username == currentUser.username:
+            isFound = True
     
     if request.method == 'POST':
         form = ParticipationForm(request.POST) 
         if currentUser.username != 'admin':
-            currentEvent.users.add(currentUser)
+            if isFound:
+                currentEvent.users.remove(currentUser)
+            else:
+                currentEvent.users.add(currentUser)
             currentEvent.save()
         
         return redirect('events-info', id=id)
@@ -92,6 +100,7 @@ def eventsInfo(request, id):
         'currentEvent': currentEvent,
         'currentUser': currentUser,
         'profiles': profiles,
+        'ifParticipates': isFound,
         'form': form
     }
     return render(request, "main/events_info.html", context)
