@@ -6,7 +6,11 @@ from .models import Profile, Event
 from .forms import EventForm, ParticipationForm
 from json import dumps
 from datetime import datetime
-from PIL import Image
+from PIL import Image as PilImage
+from io import BytesIO
+from django.core.files.base import ContentFile
+from django.core.files.uploadedfile import InMemoryUploadedFile, TemporaryUploadedFile
+import os
 
 @login_required
 def profileHome(request, username):
@@ -126,12 +130,7 @@ def eventsAdd(request):
                             startDate=startDate,
                             endDate=endDate)
         else:   
-            img = Image.open(picture)
-        
-            if img.height > 200 or img.width > 200:
-                outputSize = (200, 200)
-                img.thumbnail(outputSize)
-                img.save(picture) 
+            picture = resize_uploaded_image(picture, 200, 200)
             newEvent = Event.objects.create(author=author, 
                                 picture=picture,
                                 title=title, 
@@ -175,6 +174,7 @@ def eventsEdit(request, id):
             return redirect('events-edit', id=id)
         
         if picture != None:
+            picture = resize_uploaded_image(picture, 200, 200)
             currentEvent.picture = picture
         currentEvent.title = title
         currentEvent.description = description
@@ -203,3 +203,31 @@ def calendar(request):
     }
     return render(request, "main/calendar.html", context)
 
+def resize_uploaded_image(image, max_width, max_height):
+    size = (max_width, max_height)
+
+    if isinstance(image, InMemoryUploadedFile):
+        memory_image = BytesIO(image.read())
+        pil_image = PilImage.open(memory_image)
+        img_format = os.path.splitext(image.name)[1][1:].upper()
+        img_format = 'JPEG' if img_format == 'JPG' else img_format
+
+        if pil_image.width > max_width or pil_image.height > max_height:
+            pil_image.thumbnail(size)
+
+        new_image = BytesIO()
+        pil_image.save(new_image, format=img_format)
+
+        new_image = ContentFile(new_image.getvalue())
+        return InMemoryUploadedFile(new_image, None, image.name, image.content_type, None, None)
+
+    elif isinstance(image, TemporaryUploadedFile):
+        path = image.temporary_file_path()
+        pil_image = PilImage.open(path)
+
+        if pil_image.width > max_width or pil_image.height > max_height:
+            pil_image.thumbnail(size)
+            pil_image.save(path)
+            image.size = os.stat(path).st_size
+
+    return image
