@@ -8,8 +8,6 @@ def register(request):
         form = UserRegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
-            user.firstName = form.cleaned_data.get('firstName')
-            user.lastName = form.cleaned_data.get('lastName')
             username = form.cleaned_data.get('username')
 
             messages.success(request, f'Konto {username} utworzone')
