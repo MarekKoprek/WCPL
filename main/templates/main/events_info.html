@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block event %}
-<div class="row px-1 justify-content-center align-items-center" style="height: 180px;">
+<div class="row px-1 justify-content-center align-items-center" style="min-height: 180px;">
     <div class="col-md-3 col-sm-12">
         <div class="d-flex justify-content-center align-items-center">
             <img class="rounded" src="{{ currentEvent.picture.url }}" alt="event-icon" style="width: 144px;height: 144px;">
@@ -10,7 +10,7 @@
     </div>
     <div class="col-md-9 col-sm-12">
         <div class="container text-center">
-            <h1 class="fw-bold m-5">{{ currentEvent.title }}</h1>
+            <h1 class="fw-bold">{{ currentEvent.title }}</h1>
         </div>
     </div>
 </div>
@@ -26,9 +26,15 @@
     <ul class="navbar-nav mr-auto">
         <li class="nav-item">
             <div class="row" style="min-height: 120px;">
-                {% for user in currentEvent.users.all|slice:":12" %}
+                {% for profile in profiles|slice:":12" %}
                 <div class="col-md-3">
-                    <a class="nav-link" href="{% url 'profile-home'  user.username %}" style="color: inherit;">{{ user.first_name }} {{ user.last_name }}</a>
+                    <a class="nav-link" href="{% url 'profile-home'  profile.user.username %}" style="color: inherit;">
+                        {% if profile.user_type == 'student' %}
+                        {{ profile.user.first_name }} {{ profile.user.last_name }}
+                        {% else %}
+                        {{ profile.nameFirm }}
+                        {% endif %}
+                    </a>
                 </div>
                 {% endfor %}
             </div>
@@ -46,7 +52,11 @@
     <form method="POST">
         {% csrf_token %}
         <button class="col-md-12 btn pt-1 rounded-pill text-center" type="submit" style="background-color: #F2785C">
+            {% if ifParticipates %}
+            <h1 class="fw-bold">Wypisz się</h1>
+            {% else %}
             <h1 class="fw-bold">Zgłoś udział</h1>
+            {% endif %}
         </button>
     </form>
     {% endif %}

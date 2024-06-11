@@ -1,10 +1,15 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from .models import Profile, Event
+from .models import Profile, Event, Bug
 from .forms import EventForm, ParticipationForm
 from json import dumps
 from datetime import datetime
+from PIL import Image as PilImage
+from io import BytesIO
+from django.core.files.base import ContentFile
+from django.core.files.uploadedfile import InMemoryUploadedFile, TemporaryUploadedFile
+import os
 
 @login_required
 def profileHome(request, username):
@@ -23,6 +28,10 @@ def profileHome(request, username):
         profile.semester = request.POST.get('semester', '')
         profile.bio = request.POST.get('bio', '')
 
+        if 'picture' in request.FILES:
+            profile.picture = request.FILES['picture']
+            profile.picture = resize_uploaded_image(profile.picture, 200, 200)
+
         userInfo.save()
         profile.save()
 
@@ -32,6 +41,10 @@ def profileHome(request, username):
         profile.nameFirm = request.POST.get('name', '')
         profile.website = request.POST.get('website', '')
         profile.bio = request.POST.get('bio', '')
+
+        if 'picture' in request.FILES:
+            profile.picture = request.FILES['picture']
+            profile.picture = resize_uploaded_image(profile.picture, 200, 200)
 
         profile.save()
 
@@ -48,6 +61,8 @@ def profileHome(request, username):
     else:
         return render(request, 'main/profile_firm.html', context)
 
+
+
 @login_required
 def eventsSearch(request):
     context = {
@@ -59,13 +74,26 @@ def eventsSearch(request):
 def eventsInfo(request, id):
     currentEvent = get_object_or_404(Event, id=id)
     currentUser = request.user
-    print(currentEvent.users.all)
+    profiles = []
+    for user in currentEvent.users.all():
+        profile = Profile.objects.get(user=user)
+        profiles.append(profile)
+        
+    isFound = False
+    for user in currentEvent.users.all():
+        if user.username == currentUser.username:
+            isFound = True
     
     if request.method == 'POST':
         form = ParticipationForm(request.POST) 
         if currentUser.username != 'admin':
-            currentEvent.users.add(currentUser)
+            if isFound:
+                currentEvent.users.remove(currentUser)
+            else:
+                currentEvent.users.add(currentUser)
             currentEvent.save()
+        
+        return redirect('events-info', id=id)
     else:
         form = ParticipationForm()
         
@@ -73,6 +101,8 @@ def eventsInfo(request, id):
         'events': Event.objects.all(),
         'currentEvent': currentEvent,
         'currentUser': currentUser,
+        'profiles': profiles,
+        'ifParticipates': isFound,
         'form': form
     }
     return render(request, "main/events_info.html", context)
@@ -96,20 +126,29 @@ def eventsAdd(request):
         endTime = request.POST.get('hourEnd')
         endTimeList = endTime.split(':')
         
-        startDate = datetime(int(startDateList[0]), int(startDateList[1]), int(startDateList[2]), int(startTimeList[0]), int(startTimeList[1], 0))
-        endDate = datetime(int(endDateList[0]), int(endDateList[1]), int(endDateList[2]), int(endTimeList[0]), int(endTimeList[1], 0))
+        startDate = datetime(int(startDateList[0]), int(startDateList[1]), int(startDateList[2]), int(startTimeList[0]), int(startTimeList[1]), 0)
+        endDate = datetime(int(endDateList[0]), int(endDateList[1]), int(endDateList[2]), int(endTimeList[0]), int(endTimeList[1]), 0)
         
         now = datetime.now()
-        if(startDate > endDate or startDate < now):
+        if(startDate > endDate or startDate < now or len(title) > 25 or len(description) > 620):
             return redirect('events-add')
             
-        Event.objects.create(author=author, 
-                            picture=picture,
+        if picture == None:
+            newEvent = Event.objects.create(author=author, 
                             title=title, 
                             description=description, 
                             startDate=startDate,
                             endDate=endDate)
-            
+        else:   
+            picture = resize_uploaded_image(picture, 200, 200)
+            newEvent = Event.objects.create(author=author, 
+                                picture=picture,
+                                title=title, 
+                                description=description, 
+                                startDate=startDate,
+                                endDate=endDate)
+        newEvent.users.add(userCurrent)
+        
         return redirect('events-search')
     else:
         form = EventForm()
@@ -141,10 +180,12 @@ def eventsEdit(request, id):
         endDate = datetime(int(endDateList[0]), int(endDateList[1]), int(endDateList[2]), int(endTimeList[0]), int(endTimeList[1], 0))
         
         now = datetime.now()
-        if(startDate > endDate or startDate < now):
+        if(startDate > endDate or startDate < now or len(title) > 25 or len(description) > 620):
             return redirect('events-edit', id=id)
         
-        currentEvent.picture = picture
+        if picture != None:
+            picture = resize_uploaded_image(picture, 200, 200)
+            currentEvent.picture = picture
         currentEvent.title = title
         currentEvent.description = description
         currentEvent.startDate = startDate
@@ -172,3 +213,45 @@ def calendar(request):
     }
     return render(request, "main/calendar.html", context)
 
+@login_required
+def bug(request):
+    if request.method == 'POST':
+        author = request.user
+        section = request.POST.get('section')
+        description = request.POST.get('description')
+
+        newBug = Bug(author=author, section=section, description=description)
+        newBug.save()
+
+        return redirect('profile-home', username=author.username)
+
+    return render(request, "main/bug.html")
+
+def resize_uploaded_image(image, max_width, max_height):
+    size = (max_width, max_height)
+
+    if isinstance(image, InMemoryUploadedFile):
+        memory_image = BytesIO(image.read())
+        pil_image = PilImage.open(memory_image)
+        img_format = os.path.splitext(image.name)[1][1:].upper()
+        img_format = 'JPEG' if img_format == 'JPG' else img_format
+
+        if pil_image.width > max_width or pil_image.height > max_height:
+            pil_image.thumbnail(size)
+
+        new_image = BytesIO()
+        pil_image.save(new_image, format=img_format)
+
+        new_image = ContentFile(new_image.getvalue())
+        return InMemoryUploadedFile(new_image, None, image.name, image.content_type, None, None)
+
+    elif isinstance(image, TemporaryUploadedFile):
+        path = image.temporary_file_path()
+        pil_image = PilImage.open(path)
+
+        if pil_image.width > max_width or pil_image.height > max_height:
+            pil_image.thumbnail(size)
+            pil_image.save(path)
+            image.size = os.stat(path).st_size
+
+    return image
