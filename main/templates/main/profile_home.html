@@ -45,7 +45,7 @@ active
                                     <div class="col-md-12"><label class="labels">Wydział</label><input type="text" class="form-control" name="faculty" placeholder="Wydział" value="{{ profile.faculty }}"  {% if userCurrent.username != userInfo.username %} disabled {% endif %}></div>
                                     <div class="col-md-12"><label class="labels">Kierunek</label><input type="text" class="form-control" name="course" placeholder="Kierunek" value="{{ profile.course }}"  {% if userCurrent.username != userInfo.username %} disabled {% endif %}></div>
                                     <div class="col-md-12"><label class="labels">Semestr studiów</label><input type="text" class="form-control" name="semester" placeholder="Semestr studiów" value="{{ profile.semester }}"  {% if userCurrent.username != userInfo.username %} disabled {% endif %}></div>
-                                    <div class="col-md-12"><label class="labels">O mnie</label><textarea type="text" class="form-control" name="bio" placeholder="bio"  {% if userCurrent.username != userInfo.username %} disabled {% endif %}>{{ profile.bio }}</textarea></div>
+                                    <div class="col-md-12"><label class="labels">O mnie</label><textarea type="text" class="form-control" name="bio" placeholder="bio"  {% if userCurrent.username != userInfo.username %} disabled {% endif %} style="min-height: 120px;">{{ profile.bio }}</textarea></div>
                                 </div>
                                 {% if userCurrent.username == userInfo.username %}
                                 <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
