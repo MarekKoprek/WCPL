@@ -3,7 +3,7 @@ from . import views
 from users import views as user_views
 from django.conf import settings
 from django.conf.urls.static import static
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
 
 urlpatterns = [
     path('profile/<str:username>', views.profileHome, name='profile-home'),
@@ -14,6 +14,7 @@ urlpatterns = [
     path('events/add', views.eventsAdd, name='events-add'),
     path('register/', user_views.register, name='register'),
     path('login/', LoginView.as_view(), name='login'),
+    path('logout/', user_views.logoutUser, name='logout'),
     path('bug/', views.bug, name='bug')
 ]
 
