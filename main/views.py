@@ -131,6 +131,9 @@ def eventsAdd(request):
         endDateList = endDate.split('-')
         endTime = request.POST.get('hourEnd')
         endTimeList = endTime.split(':')
+
+        if title == '' or description == '' or startDate == '' or startTime == '' or endDate == '' or endTime == '':
+            return redirect('events-add')
         
         startDate = datetime(int(startDateList[0]), int(startDateList[1]), int(startDateList[2]), int(startTimeList[0]), int(startTimeList[1]), 0)
         endDate = datetime(int(endDateList[0]), int(endDateList[1]), int(endDateList[2]), int(endTimeList[0]), int(endTimeList[1]), 0)
@@ -181,6 +184,9 @@ def eventsEdit(request, id):
         endDateList = endDate.split('-')
         endTime = request.POST.get('hourEnd')
         endTimeList = endTime.split(':')
+
+        if title == '' or description == '' or startDate == '' or startTime == '' or endDate == '' or endTime == '':
+            return redirect('events-edit', id=id)
         
         startDate = datetime(int(startDateList[0]), int(startDateList[1]), int(startDateList[2]), int(startTimeList[0]), int(startTimeList[1], 0))
         endDate = datetime(int(endDateList[0]), int(endDateList[1]), int(endDateList[2]), int(endTimeList[0]), int(endTimeList[1], 0))
