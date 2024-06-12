@@ -17,6 +17,7 @@ def profileHome(request, username):
     profile = get_object_or_404(Profile, user=userInfo)
     userCurrent = request.user
 
+
     if request.method == 'POST' and profile.user_type == 'student':
         userInfo.first_name = request.POST.get('first_name', '')
         userInfo.last_name = request.POST.get('last_name', '')
@@ -55,6 +56,11 @@ def profileHome(request, username):
         'profile' : profile,
         'userCurrent' : userCurrent
     }
+    if username == "admin":
+        if userCurrent.username != "admin":
+            return redirect('profile-home', username=userCurrent.username)
+        else:
+            return redirect('login')
 
     if profile.user_type == 'student':
         return render(request, 'main/profile_home.html', context)

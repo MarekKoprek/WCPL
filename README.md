@@ -35,8 +35,8 @@ python manage.py runserver
 ## Strona administratora
 **Adres strony `http://127.0.0.1:8000/admin/`**  
 **Dane do konta administratora**
-- Username: admin2
-- Password: haslo123
+- Username: admin
+- Password: admin
 
 ### Opis: ###
 Strona administratora umożliwia przeglądanie bazy danych, wprowadzanie zmian w niej, oraz dodawanie nowych rekordów.
