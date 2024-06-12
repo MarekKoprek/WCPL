@@ -130,7 +130,7 @@ def eventsAdd(request):
         endDate = datetime(int(endDateList[0]), int(endDateList[1]), int(endDateList[2]), int(endTimeList[0]), int(endTimeList[1]), 0)
         
         now = datetime.now()
-        if(startDate > endDate or startDate < now or len(title) > 25 or len(description) > 620):
+        if(startDate > endDate or startDate < now or len(title) > 100 or len(description) > 620):
             return redirect('events-add')
             
         if picture == None:
@@ -180,7 +180,7 @@ def eventsEdit(request, id):
         endDate = datetime(int(endDateList[0]), int(endDateList[1]), int(endDateList[2]), int(endTimeList[0]), int(endTimeList[1], 0))
         
         now = datetime.now()
-        if(startDate > endDate or startDate < now or len(title) > 25 or len(description) > 620):
+        if(startDate > endDate or startDate < now or len(title) > 100 or len(description) > 620):
             return redirect('events-edit', id=id)
         
         if picture != None:
