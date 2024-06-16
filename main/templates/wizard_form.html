@@ -11,12 +11,18 @@
         {% csrf_token %}
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">Zarejestruj się</legend>
-            {{form.as_p}}
+
+            {{ wizard.management_form }}
+            {{ wizard.form.as_p }}
 
         </fieldset>
         <div class="form-group">
-            <button class="btn btn-outline-info" type="submit">Zarejestruj się</button>
+            <button class="btn btn-outline-info" type="submit">Dalej</button>
         </div>
+        <div class="border-top pt-3">
+            <small class="text-muted">Posiadasz już konto?</small>
+                <a input type="button" href="{% url 'login' %}">Zaloguj się</a>
+       </div>
     </form>
 </div>
 {% endblock content %}

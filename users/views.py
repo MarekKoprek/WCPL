@@ -1,27 +1,50 @@
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 from formtools.wizard.views import SessionWizardView
-from .forms import UserForm, ProfileForm, NameForm
+from .forms import UserForm, ProfileForm, NameForm, FirmForm
 from main.models import Profile
 
-FORMS = [("user", UserForm),
-         ("name", NameForm),
-         ("profile", ProfileForm)]
+FORMS = [
+    ("user", UserForm),
+    ("name", NameForm),
+    ("profile", ProfileForm),
+    ("firm", FirmForm),
+]
 
-TEMPLATES = {"user": "registration/user_form.html",
-             "name": "registration/user_form.html",
-             "profile": "registration/profile_form.html"}
+TEMPLATES = {
+    "user": "registration/user_form.html",
+    "name": "registration/user_form.html",
+    "profile": "registration/profile_form.html",
+    "firm": "registration/firm_form.html"
+}
+
 
 class RegistrationWizard(SessionWizardView):
     form_list = FORMS
 
     def get_template_names(self):
-        return [TEMPLATES[self.steps.current]]
+        current_step = self.steps.current
+
+        if current_step == 'user':
+            return [TEMPLATES["user"]]
+
+        cleaned_data = self.get_cleaned_data_for_step('user')
+        user_type = cleaned_data['user_type']
+        if user_type == 'student' and current_step in ['name', 'profile']:
+            return [TEMPLATES[current_step]]
+        if user_type == 'firm' and current_step == 'firm':
+            return [TEMPLATES["firm"]]
+
+
+        return super().get_template_names()
+
+
 
     def done(self, form_list, **kwargs):
         user_form = form_list[0]
         name_form = form_list[1]
         profile_form = form_list[2]
+        firm_form = form_list[3]
 
         if User.objects.filter(username=user_form.cleaned_data['username']).exists():
             return self.render_revalidation_failure(form_list, 'User already exists.')
@@ -34,14 +57,25 @@ class RegistrationWizard(SessionWizardView):
             last_name=name_form.cleaned_data['last_name'],
         )
 
-        profile, created = Profile.objects.get_or_create(user=user)
-        profile.bio = profile_form.cleaned_data['bio']
-        profile.user_type = user_form.cleaned_data['user_type']
-        profile.phone_number = profile_form.cleaned_data['phone_number']
-        profile.faculty = profile_form.cleaned_data['faculty']
-        profile.course = profile_form.cleaned_data['course']
-        profile.semester = profile_form.cleaned_data['semester']
-        profile.save()
+        cleaned_data = self.get_cleaned_data_for_step('user')
+        if cleaned_data and 'user_type' in cleaned_data:
+            user_type = cleaned_data['user_type']
+            if user_type == "student" and profile_form:
+                profile = Profile.objects.create(
+                    user=user,
+                    phone_number=profile_form.cleaned_data['phone_number'],
+                    faculty=profile_form.cleaned_data['faculty'],
+                    course=profile_form.cleaned_data['course'],
+                    semester=profile_form.cleaned_data['semester'],
+                    bio=profile_form.cleaned_data['bio']
+                )
+            elif user_type == "firm" and firm_form:
+                profile = Profile.objects.create(
+                    user=user,
+                    nameFirm=firm_form.cleaned_data['nameFirm'],
+                    website=firm_form.cleaned_data['website'],
+                    bio=firm_form.cleaned_data['bio']
+                )
 
         return redirect('login')
 
@@ -56,8 +90,6 @@ class RegistrationWizard(SessionWizardView):
 
     def get_step_index(self, step):
         return {step_name: index for index, (step_name, _) in enumerate(FORMS)}[step]
-
-
 def login(request):
     return render(request, 'users/login.html')
 

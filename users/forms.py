@@ -35,4 +35,7 @@ class ProfileForm(forms.ModelForm):
         model = Profile
         fields = ['phone_number', 'faculty', 'course', 'semester', 'bio']
 
-
+class FirmForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['nameFirm', 'website', 'bio']
