@@ -1,0 +1,7 @@
+<!-- templates/registration/user_form.html -->
+<form method="post">
+    {% csrf_token %}
+    {{ wizard.management_form }}
+    {{ wizard.form.as_p }}
+    <button type="submit">Next</button>
+</form>

@@ -4,6 +4,7 @@ from users import views as user_views
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.views import LoginView
+from users.views import RegistrationWizard, FORMS
 
 urlpatterns = [
     path('profile/<str:username>', views.profileHome, name='profile-home'),
@@ -12,7 +13,7 @@ urlpatterns = [
     path('events/edit/<int:id>', views.eventsEdit, name='events-edit'),
     path('calendar/', views.calendar, name='calendar'),
     path('events/add', views.eventsAdd, name='events-add'),
-    path('register/', user_views.register, name='register'),
+    path('register/', RegistrationWizard.as_view(FORMS), name='register'),
     path('login/', LoginView.as_view(), name='login'),
     path('bug/', views.bug, name='bug')
 ]
