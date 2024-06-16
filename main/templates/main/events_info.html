@@ -44,7 +44,7 @@
 <div class="row px-5">
     {% if currentEvent.author == currentUser %}
     <div class="container">
-        <a class="col-md-12 btn pt-1 rounded-pill text-center" href="{% url 'events-edit' currentEvent.id %}" style="background-color: #F2785C">
+        <a class="col-md-12 btn pt-1 rounded-pill text-center" href="{% url 'events-edit' currentEvent.id errorsCode %}" style="background-color: #F2785C">
             <h1 class="fw-bold">Edytuj wydarzenie</h1>
         </a>
     </div>
