@@ -73,6 +73,7 @@ def profileHome(request, username):
 def eventsSearch(request):
     context = {
         'events': Event.objects.all(),
+        'errorsCode': 0
         }
     return render(request, "main/events_search.html", context)
 
@@ -109,12 +110,13 @@ def eventsInfo(request, id):
         'currentUser': currentUser,
         'profiles': profiles,
         'ifParticipates': isFound,
+        'errorsCode': 0,
         'form': form
     }
     return render(request, "main/events_info.html", context)
 
 @login_required
-def eventsAdd(request):
+def eventsAdd(request, errors):
     userCurrent = request.user
     
     if request.method == 'POST':
@@ -135,12 +137,17 @@ def eventsAdd(request):
         if title == '' or description == '' or startDate == '' or startTime == '' or endDate == '' or endTime == '':
             return redirect('events-add')
         
-        startDate = datetime(int(startDateList[0]), int(startDateList[1]), int(startDateList[2]), int(startTimeList[0]), int(startTimeList[1]), 0)
-        endDate = datetime(int(endDateList[0]), int(endDateList[1]), int(endDateList[2]), int(endTimeList[0]), int(endTimeList[1]), 0)
+        startDate = check_date(startDateList, startTimeList)
+        if startDate == 1:
+            startDate = datetime(int(startDateList[0]), int(startDateList[1]), int(startDateList[2]), int(startTimeList[0]), int(startTimeList[1]), 0)
         
-        now = datetime.now()
-        if(startDate > endDate or startDate < now or len(title) > 100 or len(description) > 620):
-            return redirect('events-add')
+        endDate = check_date(endDateList, endTimeList)
+        if endDate == 1:
+            endDate = datetime(int(endDateList[0]), int(endDateList[1]), int(endDateList[2]), int(endTimeList[0]), int(endTimeList[1]), 0)
+        
+        errors = check_errors(title, description, startDate, endDate)
+        if errors != 0:
+            return redirect('events-add', errors)
             
         if picture == None:
             newEvent = Event.objects.create(author=author, 
@@ -160,11 +167,17 @@ def eventsAdd(request):
         
         return redirect('events-search')
     else:
+        errorsList = set_errors(errors)
         form = EventForm()
-    return render(request, "main/events_add.html", {'form': form})
+
+    context = {
+        'errors': errorsList,
+        'form': form
+    }
+    return render(request, "main/events_add.html", context)
 
 @login_required
-def eventsEdit(request, id):
+def eventsEdit(request, id, errors):
     currentEvent = get_object_or_404(Event, id=id)
     currentUser = request.user
     
@@ -188,12 +201,17 @@ def eventsEdit(request, id):
         if title == '' or description == '' or startDate == '' or startTime == '' or endDate == '' or endTime == '':
             return redirect('events-edit', id=id)
         
-        startDate = datetime(int(startDateList[0]), int(startDateList[1]), int(startDateList[2]), int(startTimeList[0]), int(startTimeList[1], 0))
-        endDate = datetime(int(endDateList[0]), int(endDateList[1]), int(endDateList[2]), int(endTimeList[0]), int(endTimeList[1], 0))
+        startDate = check_date(startDateList, startTimeList)
+        if startDate == 1:
+            startDate = datetime(int(startDateList[0]), int(startDateList[1]), int(startDateList[2]), int(startTimeList[0]), int(startTimeList[1], 0))
         
-        now = datetime.now()
-        if(startDate > endDate or startDate < now or len(title) > 100 or len(description) > 620):
-            return redirect('events-edit', id=id)
+        endDate = check_date(endDateList, endTimeList)
+        if endDate == 1:
+            endDate = datetime(int(endDateList[0]), int(endDateList[1]), int(endDateList[2]), int(endTimeList[0]), int(endTimeList[1], 0))
+        
+        errors = check_errors(title, description, startDate, endDate)
+        if errors != 0:
+            return redirect('events-edit', id, errors)
         
         if picture != None:
             picture = resize_uploaded_image(picture, 200, 200)
@@ -207,10 +225,12 @@ def eventsEdit(request, id):
         
         return redirect('events-search')
     else:
+        errorsList = set_errors(errors)
         form = EventForm()
         
     context = {
         'currentEvent': currentEvent,
+        'errors': errorsList,
         'form': form
     }
     
@@ -267,3 +287,52 @@ def resize_uploaded_image(image, max_width, max_height):
             image.size = os.stat(path).st_size
 
     return image
+
+def set_errors(errorsCode):
+    errors = []
+    if errorsCode & (1 << 0):
+        errors.append('Tytuł jest wymagany')
+    if errorsCode & (1 << 1):
+        errors.append('Tytuł nie może przekraczać 100 znaków')
+    if errorsCode & (1 << 2):
+        errors.append('Opis jest wymagany')
+    if errorsCode & (1 << 3):
+        errors.append('Opis nie może przekraczać 620 znaków')
+    if errorsCode & (1 << 4):
+        errors.append('Data ropoczęcia nie może być przed dzisiejszym dniem')
+    if errorsCode & (1 << 5):
+        errors.append('Data zakończenia nie może być przed datą rozpoczęcia')
+    if errorsCode & (1 << 6):
+        errors.append('Data ropoczęcia jest wymagana')
+    if errorsCode & (1 << 7):
+        errors.append('Data zakończenia jest wymagana')
+    return errors
+
+def check_errors(title, description, startDate, endDate):
+    errorsCode = 0
+    if len(title) == 0:
+        errorsCode |= (1 << 0)
+    if len(title) > 100:
+        errorsCode |= (1 << 1)
+    if len(description) == 0:
+        errorsCode |= (1 << 2)
+    if len(description) > 620:
+        errorsCode |= (1 << 3)
+    if startDate == 0:
+        errorsCode |= (1 << 6)
+    elif startDate < datetime.now():
+        errorsCode |= (1 << 4)
+    if endDate == 0:
+        errorsCode |= (1 << 7)
+    elif startDate != 0 and startDate > endDate:
+        errorsCode |= (1 << 5)
+    return errorsCode 
+
+def check_date(dateList, timeList):
+    for date in dateList:
+        if len(date) == 0:
+            return 0
+    for time in timeList:
+        if len(time) == 0:
+            return 0
+    return 1
