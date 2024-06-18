@@ -14,10 +14,17 @@ active
     <div class="container">
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            <div class="row mx-4 justify-content-center" style="height: 673px;">
+            <div class="row mx-4 justify-content-center" style="min-height: 673px;">
                 <div class="col-md-6 col-sm-12">
                     <div class="d-flex align-items-center ms-3" style="height: 100%;">
                         <div class="row text-center mt-3">
+                            {% if errors %}
+                            <div class="text-center pt-2 mb-2 col-md-12" style="background-color: lightcoral; color: white;">
+                                {% for error in errors %}
+                                <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
                             <div class="col-md-12 text-center">
                                 <label class="labels h3">Dodaj zdjęcie</label>
                             </div>

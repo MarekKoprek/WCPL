@@ -111,3 +111,7 @@ def login(request):
 
 def logout(request):
     return render(request, 'users/logout.html')
+def logoutUser(request):
+    if(request.user.username != None):
+        logout(request)
+    return redirect('login')

@@ -30,23 +30,33 @@
           
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav mr-auto">
+                {% if user.is_authenticated %}
                 <li class="nav-item">
                   <a class="nav-link {% block calendar_activate %}{% endblock %}" href="{% url 'calendar' %}">Kalendarz</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link {% block events_activate %}{% endblock %}" href="{% url 'events-search' %}">Wydarzenia</a>
                 </li>
-                {% if user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link {% block profile_activate %}{% endblock %}" href="{% url 'profile-home' user.username %}">Profil</a>
                 </li>
-                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Wyloguj</a>
+                </li>  
+                {% else %}
                 <li class="nav-item">
                     <a class="nav-link {% block login %}{% endblock %}" href="{% url 'login' %}">Zaloguj się</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {% block register %}{% endblock %}" href="{% url 'register' %}">Zarejestruj się</a>
-                </li>
+                </li>  
+                {% endif %} 
+              </ul>
+              {% if user.is_authenticated %}
+              <span class="span-text">
+                Witaj {{ user.username }}
+              </span>
+              {% endif %}
             </div>
         </nav>
         {% block content %}{% endblock %}
