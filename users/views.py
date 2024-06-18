@@ -3,6 +3,7 @@ from django.shortcuts import redirect, render
 from formtools.wizard.views import SessionWizardView
 from .forms import UserForm, ProfileForm, NameForm, FirmForm
 from main.models import Profile
+from django.contrib.auth import logout
 
 FORMS = [("user", UserForm),
          ("name", NameForm),
@@ -109,8 +110,6 @@ def register(request):
 def login(request):
     return render(request, 'users/login.html')
 
-def logout(request):
-    return render(request, 'users/logout.html')
 def logoutUser(request):
     if(request.user.username != None):
         logout(request)
