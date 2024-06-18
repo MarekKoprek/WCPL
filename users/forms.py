@@ -6,18 +6,10 @@ from main.models import Profile
 
 class UserForm(UserCreationForm):
     email = forms.EmailField()
-    USER_TYPE_CHOICES = (
-        ('student', 'Student'),
-        ('firm', 'Firm'),
-    )
-    user_type = forms.ChoiceField(
-        widget=forms.RadioSelect,
-        choices=USER_TYPE_CHOICES,
-    )
 
     class Meta:
         model = User
-        fields = ['username', 'email','password1', 'password2', 'user_type']
+        fields = ['username', 'email','password1', 'password2']
 
     def __init__(self, *args, **kwargs):
         super(UserForm, self).__init__(*args, **kwargs)

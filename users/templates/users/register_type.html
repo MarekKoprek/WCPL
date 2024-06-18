@@ -1,0 +1,20 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<div class="container">
+    <div>
+        <div class="border-top pt-3">
+            <big class="text-muted">Chcesz założyć konto studenta?</big>
+                <a input type="button" href="{% url 'register_student' %}">Kliknij tu</a>
+       </div>
+        <div class="border-top pt-3">
+            <big class="text-muted">Chcesz założyć konto firmy?</big>
+                <a input type="button" href="{% url 'register' %}">Kliknij tu</a>
+       </div>
+    </div>
+    <div class="border-top pt-3">
+        <small class="text-muted">Posiadasz już konto?</small>
+            <a input type="button" href="{% url 'login' %}">Zaloguj się</a>
+   </div>
+</div>
+{% endblock content %}
