@@ -30,4 +30,4 @@ class ProfileForm(forms.ModelForm):
 class FirmForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['nameFirm', 'website', 'bio']
+        fields = ['nameFirm', 'website', 'phone_number', 'bio']
