@@ -18,11 +18,13 @@ from django.contrib import admin
 from django.urls import path, include
 from users import views as user_views
 from django.contrib.auth import views as auth_views
-from users.views import RegistrationWizard, FORMS
+from users.views import RegistrationWizardStudent, RegistrationWizardFirm
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('register/', RegistrationWizard.as_view(FORMS), name='register'),
+    path('register/', user_views.register,  name='register'),
+    path('register_student/', RegistrationWizardStudent.as_view(), name='register_student'),
+    path('register_firm/', RegistrationWizardFirm.as_view(), name='register_firm'),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     path('', include('main.urls')),
 ]
