@@ -20,7 +20,7 @@ py -m pip install Django
 **5. Należy zainstalować bibliotekę**
 ```bash
 py -m pip install Pillow  
-py -m pip isntall django-formtools
+py -m pip install django-formtools
 ```  
 **6. Należy sklonować projekt z github**
 ```bash
