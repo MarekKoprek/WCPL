@@ -9,12 +9,12 @@ active
 {% endblock profile_activate %}
 
 {% block content %}
-<div class="container">
+<div class="container" >
     <div class="main">
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            <div class="container rounded bg-white mt-5 mb-5">
-                <div class="row">
+            <div class="container rounded bg-white mt-5 mb-5" >
+                <div class="row" style="background-color: #F1E7E1;">
                     <div class="col-md-3 border-right">
                         <div class="d-flex flex-column align-items-center text-center p-3 py-5">
                             {% if userCurrent.username != userInfo.username %}
