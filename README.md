@@ -64,6 +64,11 @@ Zalogowanie się do strony administratora kontem uprzywilejowanym sprawi, że b�
 ## Strona rejestracji 
 **Adres strony `http://127.0.0.1:8000/register/`**  
 
+### Walidacja: ###
+- **Unikalna nazwa użytkownika:** niemożliwe jest utworzenie wielu użytkowników o tej samej nazwie
+- **Mail w poprawnym formacie**
+- **Odpowiednio silne hasło:** hasło musi być co najmniej 4 znakowe i być różne od mailu użytkownika
+- **Walidacja hasła:** wartości w polu hasło i powtórzenie hasła muszą być takie same
 ## Strona z kalendarzem 
 **Adres strony `http://127.0.0.1:8000/calendar/`**  
 ### Opis: ###
